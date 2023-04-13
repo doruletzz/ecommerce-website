@@ -1,5 +1,5 @@
-export { default as FooterBanner } from './FooterBannerComponent';
+export { default as FooterBanner } from './Footer/FooterBannerComponent';
 export { default as HeroBanner } from './HeroBannerComponent';
-export { default as Layout } from './LayoutComponent';
-export { default as Navbar } from './NavbarComponent';
-export { default as Footer } from './FooterComponent';
+export { default as Layout } from './Layout/LayoutComponent';
+export { default as Navbar } from './Navbar/NavbarComponent';
+export { default as Footer } from './Footer/FooterComponent';
