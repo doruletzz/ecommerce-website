@@ -21,6 +21,7 @@ const ProductCardComponent = ({ product, className }: Props) => {
 			<div className='group w-full flex-1 object-cover relative'>
 				<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
 					<Button
+						id='go-arrow'
 						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 text-opacity-${
 							imgIndex === 0 ? '50' : '100'
 						}`}
@@ -31,6 +32,7 @@ const ProductCardComponent = ({ product, className }: Props) => {
 						<FontAwesomeIcon icon={faArrowLeft} />
 					</Button>
 					<Button
+						id='go-arrow'
 						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 text-opacity-${
 							imgIndex === product.image.length - 1 ? '50' : '100'
 						}`}
