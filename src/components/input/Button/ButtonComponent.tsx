@@ -1,15 +1,27 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
+import React, { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 
 type Props = {
 	type?: 'button' | 'submit' | 'reset';
 	onClick?: MouseEventHandler;
 	className?: string;
-	children: ReactNode;
+	children?: ReactNode;
+	style?: CSSProperties;
 };
 
-const ButtonComponent = ({ type, className, onClick, children }: Props) => {
+const ButtonComponent = ({
+	type,
+	style,
+	className,
+	onClick,
+	children,
+}: Props) => {
 	return (
-		<button type={type} className={className} onClick={onClick}>
+		<button
+			style={style}
+			type={type}
+			className={className}
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	);

@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from '@/features/app/hooks';
 import { addCartItem, removeCartItem } from '@/features/cart/slice';
 import Image from 'next/image';
 import { Button } from '@/components/input';
+import { ParsedUrlQuery } from 'querystring';
 
 type Props = {
 	productDetails: Product;
@@ -105,7 +106,7 @@ const ProductDetails = ({ productDetails }: Props) => {
 							>
 								<FontAwesomeIcon icon={faMinus} />
 							</Button>
-							{items?.find((item) => item.product._id === _id)
+							{items?.find((item) => item.product?._id === _id)
 								?.quantity ?? 0}
 							<button
 								onClick={() =>
@@ -143,7 +144,13 @@ const ProductDetails = ({ productDetails }: Props) => {
 	);
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { slug } }) => {
+interface StaticPropsParams extends ParsedUrlQuery {
+	slug: string;
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const { slug } = context.params as StaticPropsParams;
+
 	const productDetailsQuery = `*[_type == "product" && slug.current == '${slug}'][0]`;
 	const productDetails = await client.fetch<Product>(productDetailsQuery);
 
@@ -167,7 +174,7 @@ export const getStaticPaths = async () => {
 		paths: products.map((product) => ({
 			params: { slug: product.slug.current },
 		})),
-		fallback: true,
+		fallback: 'blocking',
 	};
 };
 

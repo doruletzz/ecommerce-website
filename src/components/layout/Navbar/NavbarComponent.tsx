@@ -25,7 +25,7 @@ const Navbar = () => {
 				<li>
 					<Link
 						className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-						href='keyboards'
+						href='/store/keyboards'
 					>
 						Mechanical Keyboards
 					</Link>
@@ -33,7 +33,7 @@ const Navbar = () => {
 				<li>
 					<Link
 						className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-						href='keyboards'
+						href='/store/keycaps'
 					>
 						Keycaps
 					</Link>
@@ -41,7 +41,7 @@ const Navbar = () => {
 				<li>
 					<Link
 						className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-						href='keyboards'
+						href='/store/deskmats'
 					>
 						Deskmats
 					</Link>

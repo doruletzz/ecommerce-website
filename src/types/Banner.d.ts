@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export type Banner = {
 	discount: string;
 	image: string;

@@ -10,7 +10,8 @@ type Slug = {
 };
 
 export type Product = {
-	_id: number;
+	_id: string;
+	category: string;
 	name: string;
 	image: Array<ReactNode>;
 	slug: Slug;

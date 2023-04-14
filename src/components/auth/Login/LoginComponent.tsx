@@ -36,8 +36,16 @@ const LoginComponent = () => {
 				id='email'
 				label='email'
 				value={email}
-				onChange={(e) => setEmail(e.target.value ?? '')}
-				onBlur={(e) => setError(validateEmail(e.target.value))}
+				onChange={(e) =>
+					setEmail((e.target as HTMLInputElement).value ?? '')
+				}
+				onBlur={(e) =>
+					setError(
+						validateEmail(
+							(e.target as HTMLInputElement).value ?? ''
+						) ?? ''
+					)
+				}
 				error={error}
 			/>
 			<Field
@@ -45,7 +53,9 @@ const LoginComponent = () => {
 				label='password'
 				value={password}
 				type={showPassword ? 'text' : 'password'}
-				onChange={(e) => setPassword(e.target.value ?? '')}
+				onChange={(e) =>
+					setPassword((e.target as HTMLInputElement).value ?? '')
+				}
 				endAdornment={
 					<Button
 						type='button'
@@ -62,7 +72,9 @@ const LoginComponent = () => {
 				label='remember me'
 				type='checkbox'
 				value={email}
-				onChange={(e) => setEmail(e.target.value ?? '')}
+				onChange={(e) =>
+					setEmail((e.target as HTMLInputElement).value ?? '')
+				}
 			/>
 			<Button>Forgot password</Button>
 			<Button>Sign in</Button>
