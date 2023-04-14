@@ -5,3 +5,4 @@ export { default as Navbar } from './Navbar/NavbarComponent';
 export { default as Footer } from './Footer/FooterComponent';
 export { default as Carousel } from './Carousel/CarouselComponent';
 export { default as Grid } from './Grid/GridComponent';
+export { default as Modal } from './Modal/ModalComponent';

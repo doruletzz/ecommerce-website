@@ -41,9 +41,8 @@ const LoginComponent = () => {
 				}
 				onBlur={(e) =>
 					setError(
-						validateEmail(
-							(e.target as HTMLInputElement).value ?? ''
-						) ?? ''
+						validateEmail((e.target as HTMLInputElement).value) ??
+							''
 					)
 				}
 				error={error}
@@ -58,6 +57,7 @@ const LoginComponent = () => {
 				}
 				endAdornment={
 					<Button
+						id={`${showPassword ? 'show' : 'hide'} password`}
 						type='button'
 						onClick={() => setShowPassword((prev) => !prev)}
 					>
@@ -76,9 +76,9 @@ const LoginComponent = () => {
 					setEmail((e.target as HTMLInputElement).value ?? '')
 				}
 			/>
-			<Button>Forgot password</Button>
-			<Button>Sign in</Button>
-			<Button>Sign in with Google</Button>
+			<Button id='forgot password'>Forgot password</Button>
+			<Button id='sign in'>Sign in</Button>
+			<Button id='sign in with google'>Sign in with Google</Button>
 		</form>
 	);
 };

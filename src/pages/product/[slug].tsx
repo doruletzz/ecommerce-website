@@ -95,6 +95,7 @@ const ProductDetails = ({ productDetails }: Props) => {
 						<h3>Quantity:</h3>
 						<div>
 							<Button
+								id='remove item'
 								onClick={() =>
 									dispatch(
 										removeCartItem({
@@ -108,7 +109,8 @@ const ProductDetails = ({ productDetails }: Props) => {
 							</Button>
 							{items?.find((item) => item.product?._id === _id)
 								?.quantity ?? 0}
-							<button
+							<Button
+								id='add item'
 								onClick={() =>
 									dispatch(
 										addCartItem({
@@ -119,15 +121,15 @@ const ProductDetails = ({ productDetails }: Props) => {
 								}
 							>
 								<FontAwesomeIcon icon={faPlus} />
-							</button>
+							</Button>
 						</div>
 					</div>
-					<button>
+					<Button id='add to cart'>
 						<FontAwesomeIcon icon={faCartShopping} /> Add To Cart
-					</button>
-					<button>
+					</Button>
+					<Button id='buy now'>
 						<FontAwesomeIcon icon={faDollarSign} /> Buy Now
-					</button>
+					</Button>
 					<div>
 						{colors?.map((color) => (
 							<div
@@ -153,8 +155,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	const productDetailsQuery = `*[_type == "product" && slug.current == '${slug}'][0]`;
 	const productDetails = await client.fetch<Product>(productDetailsQuery);
-
-	console.log(productDetails);
 
 	return {
 		props: {

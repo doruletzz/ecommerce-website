@@ -24,12 +24,12 @@ const Home = ({ products, banner }: Props) => {
 		<>
 			<HeroBanner banner={banner} />
 			<Carousel
+				pageSize={3}
 				title='Most Popular'
 				items={products.map((product) => (
 					<ProductCard key={product._id} product={product} />
 				))}
 			/>
-			<FooterBanner />
 		</>
 	);
 };

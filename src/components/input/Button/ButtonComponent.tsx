@@ -1,6 +1,7 @@
 import React, { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 
 type Props = {
+	id: string;
 	type?: 'button' | 'submit' | 'reset';
 	onClick?: MouseEventHandler;
 	className?: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 const ButtonComponent = ({
+	id,
 	type,
 	style,
 	className,
@@ -17,6 +19,8 @@ const ButtonComponent = ({
 }: Props) => {
 	return (
 		<button
+			id={id}
+			aria-label={id}
 			style={style}
 			type={type}
 			className={className}

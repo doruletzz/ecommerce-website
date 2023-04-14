@@ -36,6 +36,7 @@ const HeroBanner = ({ banner }: Props) => {
 						href={`/product/${banner.product}`}
 					>
 						<Button
+							id='cta-button'
 							type='button'
 							className='rounded bg-zinc-900 py-2 px-4 text-zinc-100 hover:bg-zinc-700'
 						>

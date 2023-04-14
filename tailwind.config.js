@@ -7,7 +7,7 @@ module.exports = {
         '128': '32rem',
       },
       aspectRatio: {
-        'card': '38 / 58'
+        'card': '6 / 7'
       }
     },
   },
