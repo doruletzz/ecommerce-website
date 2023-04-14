@@ -22,8 +22,10 @@ const ProductCardComponent = ({ product, className }: Props) => {
 				<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
 					<Button
 						id='go-arrow'
-						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 text-opacity-${
-							imgIndex === 0 ? '50' : '100'
+						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 ${
+							imgIndex === 0
+								? 'text-opacity-50'
+								: 'text-opacity-100'
 						}`}
 						onClick={() =>
 							setImgIndex((prev) => Math.max(0, prev - 1))
@@ -33,8 +35,10 @@ const ProductCardComponent = ({ product, className }: Props) => {
 					</Button>
 					<Button
 						id='go-arrow'
-						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 text-opacity-${
-							imgIndex === product.image.length - 1 ? '50' : '100'
+						className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 ${
+							imgIndex === product.image.length - 1
+								? 'text-opacity-50'
+								: 'text-opacity-100'
 						}`}
 						onClick={() =>
 							setImgIndex((prev) =>
@@ -49,8 +53,8 @@ const ProductCardComponent = ({ product, className }: Props) => {
 					{product.image?.map((_, i) => (
 						<li
 							key={i}
-							className={`w-1 h-1 rounded-full bg-slate-${
-								i === imgIndex ? '700' : '400'
+							className={`w-1 h-1 rounded-full ${
+								i === imgIndex ? 'bg-slate-700' : 'bg-slate-400'
 							}`}
 						/>
 					))}

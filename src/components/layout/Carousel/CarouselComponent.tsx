@@ -54,7 +54,7 @@ const CarouselComponent = <T extends ReactNode>({
 				{items?.map((item: T, index: number) => (
 					<li
 						key={index}
-						className={`snap-start flex-grow-0 flex-shrink-0 basis-1/${pageSize} flex-nowrap list-none`}
+						className={`snap-start flex-grow-0 flex-shrink-0 basis-1/3 flex-nowrap list-none`}
 					>
 						{item}
 					</li>

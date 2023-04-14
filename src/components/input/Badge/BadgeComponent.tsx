@@ -19,9 +19,11 @@ const BadgeComponent = ({
 		<div className={`relative ${className ?? ''}`}>
 			{children}
 			<div
-				className={`absolute ${vertical === 'top' ? '-' : ''}top-1.5 ${
-					horizontal === 'right' ? '-' : ''
-				}right-1.5 bg-red-600 text-xs rounded-full w-4 h-4 text-center text-slate-200 pointer-events-none`}
+				className={`absolute ${
+					vertical === 'top' ? '-top-1.5' : 'top-1.5'
+				} ${
+					horizontal === 'right' ? '-right-1.5' : 'right-1.5'
+				} bg-red-600 text-xs rounded-full w-4 h-4 text-center text-slate-200 pointer-events-none`}
 			>
 				{badgeContent}
 			</div>
