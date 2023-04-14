@@ -11,6 +11,11 @@ export default {
       title: 'Name',
     },
     {
+      name: 'category',
+      type: 'string',
+      title: 'Category',
+    },
+    {
       name: 'image',
       title: 'Image',
       type: 'array',
