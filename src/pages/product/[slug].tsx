@@ -1,4 +1,4 @@
-import { client, urlFor, useNextImage } from '@/lib/client';
+import { client, useNextImage } from '@/lib/client';
 import { Banner } from '@/types/Banner';
 import { Product } from '@/types/Product';
 import {
@@ -16,13 +16,31 @@ import { GetStaticProps } from 'next';
 import React, { MouseEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/features/app/hooks';
 import { addCartItem, removeCartItem } from '@/features/cart/slice';
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import { Button } from '@/components/input';
 import { ParsedUrlQuery } from 'querystring';
 import imageLoader from '@/utils/imageLoader';
 
 type Props = {
 	productDetails: Product;
+};
+
+type NextImageProps = ImageProps & {
+	image: string;
+};
+
+const NextImage = (props: NextImageProps) => {
+	const imageProps = useNextImage(props.image);
+
+	return (
+		<Image
+			{...props}
+			loader={imageProps.loader}
+			width={imageProps.width}
+			height={imageProps.height}
+			src={imageProps.src}
+		/>
+	);
 };
 
 const ProductDetails = ({ productDetails }: Props) => {
@@ -55,24 +73,20 @@ const ProductDetails = ({ productDetails }: Props) => {
 
 	return (
 		<div>
-			<Image
+			<NextImage
+				src={image[imgIndex]}
+				image={image[imgIndex]}
 				alt='shop-main-image'
-				loader={useNextImage(image && image[imgIndex]).loader}
-				width={600}
-				height={600}
-				src={useNextImage(image && image[imgIndex]).src}
 				priority
 			/>
 			<div className='grid grid-cols-6'>
 				{image?.map((img, index) => (
-					<Image
+					<NextImage
+						src={img}
+						image={img}
 						className='cursor-pointer'
 						alt={`shop-secondary-image-${index}`}
 						key={index}
-						width={useNextImage(img).height}
-						height={useNextImage(img).width}
-						src={useNextImage(img).src}
-						loader={useNextImage(img).loader}
 						onMouseEnter={(e) => handleImageMouseEnter(e, index)}
 						onMouseLeave={(e) => handleImageMouseLeave(e)}
 						onClick={(e) => handleImageClick(e, index)}

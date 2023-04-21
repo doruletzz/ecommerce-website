@@ -7,7 +7,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, {
+	MouseEvent,
+	MouseEventHandler,
+	useEffect,
+	useState,
+} from 'react';
 import { Badge, Field, Input } from '../../input';
 import { Button } from '../../input';
 import {
@@ -30,7 +35,7 @@ const Navbar = () => {
 	const [isSmall, setIsSmall] = useState(false);
 
 	useEffect(() => {
-		const handleScroll = (event) => {
+		const handleScroll = (event: Event) => {
 			if (window.scrollY > scrollTop && window.scrollY > 30)
 				setScrollTop((prev) => {
 					setIsSmall(window.scrollY > prev);
