@@ -8,7 +8,56 @@ module.exports = {
       },
       aspectRatio: {
         'card': '6 / 7'
-      }
+      },
+      keyframes: {
+        'infiniteScroll': {
+          '0%': { transform: 'translateX(var(--infinite-scroll-total-width))'},
+          '100%': { transform: 'translateX(0)'},
+        },
+        'slideUp': {
+          '0%': {
+            opacity: '0', 
+            transform: 'translateY(1rem)'},
+          '66': {
+            opacity: '100%', 
+          },
+          '100%': {
+            opacity: '100%', 
+            transform: 'translateY(0)'
+          },
+        },
+        'slideRight': {
+          '0%': {
+            transform: 'translateX(-100%)',
+          },
+          '100%': {
+            transform: 'translateX(0)'
+          },
+        },
+        'slideLeft': {
+          '0%': {
+            transform: 'translateX(100%)',
+          },
+          '100%': {
+            transform: 'translateX(0)',
+          },
+        }
+      },
+      fontFamily: {
+        'display': ['Syne', 'sans-serif'],
+        'body': ['DM Sans', 'sans-serif'],
+      },
+      transitionTimingFunction: {
+        'in-out-expo': 'cubic-bezier(.88,-0.01,.12,1)',
+        'in-expo': 'cubic-bezier(0,.77,.12,1)',
+        'out-expo': 'cubic-bezier(.69,-0.01,.96,.49)',
+      },
+      animation: {
+        'inifinte-scroll': 'infiniteScroll 40s linear infinite',
+        'slide-up': 'slideUp 1.3s cubic-bezier(.88,-0.01,.12,1)',
+        'slide-right': 'slideRight 2.3s cubic-bezier(0,.77,.12,1)',
+        'slide-left': 'slideLeft 2.3s cubic-bezier(0,.77,.12,1)'
+      },
     },
   },
   plugins: [],

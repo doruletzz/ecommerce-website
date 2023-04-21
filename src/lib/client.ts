@@ -9,6 +9,7 @@ export const client = createClient({
 	useCdn: false,
 });
 
-const builder = imageUrlBuilder(client);
+import { useNextSanityImage } from 'next-sanity-image';
 
-export const urlFor = (source: string) => builder.image(source);
+export const useNextImage = (image: string) =>
+	useNextSanityImage(client, image);

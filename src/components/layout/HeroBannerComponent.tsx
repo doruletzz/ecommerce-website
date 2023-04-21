@@ -1,36 +1,37 @@
-import { urlFor } from '@/lib/client';
 import { Banner } from '@/types/Banner';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Button } from '../input';
+import { useNextImage } from '@/lib/client';
 
 type Props = {
 	banner: Banner;
 };
 
 const HeroBanner = ({ banner }: Props) => {
+	const imgProps = useNextImage(banner.image);
 	return (
 		<>
 			{banner && (
-				<div className='flex flex-col text-center mt-72 gap-4 max-w-5xl mx-auto min-h-screen'>
+				<div className='flex flex-col text-center mt-32 gap-6 max-w-7xl mx-auto min-h-screen'>
+					<Image
+						width={imgProps.width}
+						height={imgProps.height}
+						className='absolute inset-0 -z-50 opacity-70'
+						src={imgProps.src}
+						loader={imgProps.loader}
+						alt='keyboard'
+					/>
 					<p className='bg-red-500 text-zinc-700 text-sm mx-auto py-1 px-3 rounded-full'>
 						{banner.smallText}
 					</p>
-					<h1 className='text-zinc-900 text-5xl tracking-tighter font-bold'>
+					<h1 className='text-slate-800 text-5xl font-extrabold font-display'>
 						{banner.largeText}
 					</h1>
-					<h3 className='text-zinc-700 text-lg max-w-xl mx-auto'>
+					<h3 className='text-slate-600 text-lg max-w-lg mx-auto'>
 						{banner.midText}
 					</h3>
-					<Image
-						width={1920}
-						height={1080}
-						className='absolute inset-0 -z-10 opacity-70'
-						src={urlFor(banner.image).url()}
-						loader={() => urlFor(banner.image).url()}
-						alt='keyboard'
-					/>
 					<Link
 						className='mx-auto'
 						href={`/product/${banner.product}`}
@@ -38,7 +39,7 @@ const HeroBanner = ({ banner }: Props) => {
 						<Button
 							id='cta-button'
 							type='button'
-							className='rounded bg-zinc-900 py-2 px-4 text-zinc-100 hover:bg-zinc-700'
+							className='rounded bg-slate-700 py-3 px-5 text-zinc-100 font-display text-sm font-extrabold hover:bg-orange-400'
 						>
 							{banner.primaryButtonText}
 						</Button>

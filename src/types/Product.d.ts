@@ -13,7 +13,7 @@ export type Product = {
 	_id: string;
 	category: string;
 	name: string;
-	image: Array<ReactNode>;
+	image: Array<string>;
 	slug: Slug;
 	price: number;
 	details: string;

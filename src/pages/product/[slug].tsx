@@ -1,4 +1,4 @@
-import { client, urlFor } from '@/lib/client';
+import { client, urlFor, useNextImage } from '@/lib/client';
 import { Banner } from '@/types/Banner';
 import { Product } from '@/types/Product';
 import {
@@ -19,6 +19,7 @@ import { addCartItem, removeCartItem } from '@/features/cart/slice';
 import Image from 'next/image';
 import { Button } from '@/components/input';
 import { ParsedUrlQuery } from 'querystring';
+import imageLoader from '@/utils/imageLoader';
 
 type Props = {
 	productDetails: Product;
@@ -56,21 +57,22 @@ const ProductDetails = ({ productDetails }: Props) => {
 		<div>
 			<Image
 				alt='shop-main-image'
-				loader={() => urlFor(image && image[imgIndex]).url()}
+				loader={useNextImage(image && image[imgIndex]).loader}
 				width={600}
 				height={600}
-				src={urlFor(image && image[imgIndex]).url()}
+				src={useNextImage(image && image[imgIndex]).src}
+				priority
 			/>
-			<div className='grid grid-cols-2'>
+			<div className='grid grid-cols-6'>
 				{image?.map((img, index) => (
 					<Image
 						className='cursor-pointer'
 						alt={`shop-secondary-image-${index}`}
 						key={index}
-						width={200}
-						height={200}
-						src={urlFor(img).url()}
-						loader={() => urlFor(img).url()}
+						width={useNextImage(img).height}
+						height={useNextImage(img).width}
+						src={useNextImage(img).src}
+						loader={useNextImage(img).loader}
 						onMouseEnter={(e) => handleImageMouseEnter(e, index)}
 						onMouseLeave={(e) => handleImageMouseLeave(e)}
 						onClick={(e) => handleImageClick(e, index)}

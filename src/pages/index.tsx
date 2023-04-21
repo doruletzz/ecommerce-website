@@ -3,7 +3,12 @@ import { Product } from '@/types/Product';
 
 import { client } from '../lib/client';
 import { GetServerSideProps } from 'next';
-import { Carousel, FooterBanner, HeroBanner } from '@/components/layout';
+import {
+	Carousel,
+	FooterBanner,
+	HeroBanner,
+	Ticker,
+} from '@/components/layout';
 import { ProductCard } from '@/components/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

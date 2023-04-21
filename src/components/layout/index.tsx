@@ -6,3 +6,4 @@ export { default as Footer } from './Footer/FooterComponent';
 export { default as Carousel } from './Carousel/CarouselComponent';
 export { default as Grid } from './Grid/GridComponent';
 export { default as Modal } from './Modal/ModalComponent';
+export { default as Ticker } from './Ticker/TickerComponent';
