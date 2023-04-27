@@ -1,8 +1,9 @@
-import { Product } from '@/types/Product';
+import { Product, Variant } from '@/types/Product';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type CartItem = {
 	product: Product;
+	variant: Variant;
 	quantity: number;
 };
 

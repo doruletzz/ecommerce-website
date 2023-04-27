@@ -10,16 +10,17 @@ import {
 	faStar,
 	faStarHalfStroke,
 } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarOutline } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GetStaticProps } from 'next';
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/features/app/hooks';
 import { addCartItem, removeCartItem } from '@/features/cart/slice';
 import Image, { ImageProps } from 'next/image';
 import { Button } from '@/components/input';
 import { ParsedUrlQuery } from 'querystring';
 import imageLoader from '@/utils/imageLoader';
+import { Carousel } from '@/components/layout';
+import { Rating } from '@/components/product';
 
 type Props = {
 	productDetails: Product;
@@ -44,10 +45,11 @@ const NextImage = (props: NextImageProps) => {
 };
 
 const ProductDetails = ({ productDetails }: Props) => {
-	const { _id, image, name, details, price, colors } = productDetails;
+	const { _id, image, name, details, price, variants } = productDetails;
+
+	const [quantity, setQuantity] = useState(1);
 
 	const dispatch = useAppDispatch();
-	const { items } = useAppSelector((state) => state.cart);
 
 	const [imgIndex, setImgIndex] = useState(0);
 	const [prevImgIndex, setPrevImgIndex] = useState(0);
@@ -71,38 +73,44 @@ const ProductDetails = ({ productDetails }: Props) => {
 		setImgIndex(prevImgIndex);
 	};
 
+	useEffect(() => {
+		console.log(productDetails);
+	}, []);
+
 	return (
-		<div>
-			<NextImage
-				src={image[imgIndex]}
-				image={image[imgIndex]}
-				alt='shop-main-image'
-				priority
-			/>
-			<div className='grid grid-cols-6'>
-				{image?.map((img, index) => (
-					<NextImage
-						src={img}
-						image={img}
-						className='cursor-pointer'
-						alt={`shop-secondary-image-${index}`}
-						key={index}
-						onMouseEnter={(e) => handleImageMouseEnter(e, index)}
-						onMouseLeave={(e) => handleImageMouseLeave(e)}
-						onClick={(e) => handleImageClick(e, index)}
-					/>
-				))}
+		<div className='grid grid-cols-2'>
+			<div className='flex flex-col'>
+				<NextImage
+					src={image[imgIndex]}
+					image={image[imgIndex]}
+					alt='shop-main-image'
+					priority
+				/>
+				<Carousel
+					pageSize='6'
+					items={image?.map((img, index) => (
+						<NextImage
+							src={img}
+							image={img}
+							className='cursor-pointer'
+							alt={`shop-secondary-image-${index}`}
+							key={index}
+							onMouseEnter={(e) =>
+								handleImageMouseEnter(e, index)
+							}
+							onMouseLeave={(e) => handleImageMouseLeave(e)}
+							onClick={(e) => handleImageClick(e, index)}
+						/>
+					))}
+				/>
 			</div>
 			<div>
 				<h1>{name}</h1>
 				<div>
-					<div>
-						<FontAwesomeIcon icon={faStar} />
-						<FontAwesomeIcon icon={faStar} />
-						<FontAwesomeIcon icon={faStar} />
-						<FontAwesomeIcon icon={faStarOutline} />
-						<FontAwesomeIcon icon={faStarOutline} />
-					</div>
+					<Rating
+						rating={4}
+						onRate={(rating) => console.log(rating)}
+					/>
 					<p>(20)</p>
 					<p>Details:</p>
 					<p>{details}</p>
@@ -113,46 +121,46 @@ const ProductDetails = ({ productDetails }: Props) => {
 							<Button
 								id='remove item'
 								onClick={() =>
-									dispatch(
-										removeCartItem({
-											product: productDetails,
-											quantity: 1,
-										})
-									)
+									setQuantity((prev) => Math.max(prev - 1, 1))
 								}
 							>
 								<FontAwesomeIcon icon={faMinus} />
 							</Button>
-							{items?.find((item) => item.product?._id === _id)
-								?.quantity ?? 0}
+							{quantity}
 							<Button
 								id='add item'
-								onClick={() =>
-									dispatch(
-										addCartItem({
-											product: productDetails,
-											quantity: 1,
-										})
-									)
-								}
+								onClick={() => setQuantity((prev) => prev + 1)}
 							>
 								<FontAwesomeIcon icon={faPlus} />
 							</Button>
 						</div>
 					</div>
-					<Button id='add to cart'>
+					<Button
+						id='add to cart'
+						onClick={() =>
+							dispatch(
+								addCartItem({
+									variant: productDetails.variants[0],
+									product: productDetails,
+									quantity: quantity,
+								})
+							)
+						}
+					>
 						<FontAwesomeIcon icon={faCartShopping} /> Add To Cart
 					</Button>
 					<Button id='buy now'>
 						<FontAwesomeIcon icon={faDollarSign} /> Buy Now
 					</Button>
 					<div>
-						{colors?.map((color) => (
+						{variants?.map((variant) => (
 							<div
-								key={color._key}
-								style={{ backgroundColor: color.value }}
+								key={variant?.color?._key}
+								style={{
+									backgroundColor: variant?.color?.value,
+								}}
 							>
-								{color.name}
+								{variant?.color?.name}
 							</div>
 						))}
 					</div>
@@ -169,7 +177,10 @@ interface StaticPropsParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { slug } = context.params as StaticPropsParams;
 
-	const productDetailsQuery = `*[_type == "product" && slug.current == '${slug}'][0]`;
+	const productDetailsQuery = `*[_type == "product" && slug.current == '${slug}'][0]{
+		_id, name, image, slug, price, details, colors, category->{name}, variants[]->{color, size}
+	}`;
+
 	const productDetails = await client.fetch<Product>(productDetailsQuery);
 
 	return {

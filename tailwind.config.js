@@ -55,8 +55,8 @@ module.exports = {
       animation: {
         'inifinte-scroll': 'infiniteScroll 40s linear infinite',
         'slide-up': 'slideUp 1.3s cubic-bezier(.88,-0.01,.12,1)',
-        'slide-right': 'slideRight 2.3s cubic-bezier(0,.77,.12,1)',
-        'slide-left': 'slideLeft 2.3s cubic-bezier(0,.77,.12,1)'
+        'slide-right': 'slideRight 1.3s cubic-bezier(.88,-0.01,.12,1)',
+        'slide-left': 'slideLeft 1.3s cubic-bezier(.88,-0.01,.12,1)'
       },
     },
   },

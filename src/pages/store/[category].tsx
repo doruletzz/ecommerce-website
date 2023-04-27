@@ -1,6 +1,7 @@
 import { Grid } from '@/components/layout';
 import { ProductCard } from '@/components/product';
 import { client } from '@/lib/client';
+import { Category } from '@/types/Category';
 import { Product } from '@/types/Product';
 import { GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
@@ -36,8 +37,7 @@ interface StaticPropsParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { category } = context.params as StaticPropsParams;
-	console.log(category);
-	const productsByCategoryQuery = `*[_type == "product" && category == '${category}']`;
+	const productsByCategoryQuery = `*[_type == "product" && category->slug.current == '${category}']{_id, name, image, slug, price, colors, category->{name}, variants[]->{color, size}}`;
 	const productsByCategory = await client.fetch<Product[]>(
 		productsByCategoryQuery
 	);
@@ -50,15 +50,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths = async () => {
-	const query = `*[_type == "product"] {
-		category
-	}`;
+	const query = `*[_type == "category"]`;
 
-	const products = await client.fetch<Product[]>(query);
-	console.log(products);
+	const categories = await client.fetch<Category[]>(query);
 	return {
-		paths: products.map((product) => ({
-			params: { category: product.category },
+		paths: categories.map((category) => ({
+			params: { category: category.slug.current },
 		})),
 		fallback: true,
 	};

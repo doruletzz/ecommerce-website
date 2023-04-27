@@ -2,11 +2,7 @@ import { Login } from '@/components/auth';
 import React from 'react';
 
 const index = () => {
-	return (
-		<div>
-			<Login />
-		</div>
-	);
+	return <Login />;
 };
 
 export default index;

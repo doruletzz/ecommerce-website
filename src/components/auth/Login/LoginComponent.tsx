@@ -30,7 +30,6 @@ const LoginComponent = () => {
 	return (
 		<form>
 			<h3>SIGN IN</h3>
-			{error && <p>{error}</p>}
 			<Field
 				required
 				id='email'

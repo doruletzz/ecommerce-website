@@ -4,6 +4,13 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from '../input';
 import { useNextImage } from '@/lib/client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faArrowRight,
+	faArrowsSplitUpAndLeft,
+	faSquareUpRight,
+	faUpDownLeftRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
 	banner: Banner;
@@ -39,9 +46,10 @@ const HeroBanner = ({ banner }: Props) => {
 						<Button
 							id='cta-button'
 							type='button'
-							className='rounded bg-slate-700 py-3 px-5 text-zinc-100 font-display text-sm font-extrabold hover:bg-orange-400'
+							className='rounded bg-slate-700 py-3 flex items-center gap-3 px-5 text-zinc-100 font-display text-sm font-extrabold hover:bg-slate-800 hover:gap-6 transition-all duration-400 ease-in-out-expo'
 						>
-							{banner.primaryButtonText}
+							{banner.primaryButtonText}{' '}
+							<FontAwesomeIcon icon={faArrowRight} />
 						</Button>
 					</Link>
 					<div className=''>

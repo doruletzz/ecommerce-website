@@ -1,30 +1,16 @@
 import {defineField, defineType} from 'sanity'
 
-export default {
+export default defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
   fields: [
-    {
+    defineField({
       name: 'name',
       type: 'string',
       title: 'Name',
-    },
-    {
-      name: 'category',
-      type: 'string',
-      title: 'Category',
-    },
-    {
-      name: 'image',
-      title: 'Image',
-      type: 'array',
-      of: [{type: 'image'}],
-      options: {
-        hotspot: true,
-      },
-    },
-    {
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -32,32 +18,47 @@ export default {
         source: 'name',
         maxLength: 90,
       },
-    },
-    {
+    }),
+    defineField({
       name: 'price',
       title: 'Price',
       type: 'number',
-    },
-    {
-      name: 'colors',
-      title: 'Colors',
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: {
+        type: 'category',
+      },
+    }),
+    defineField({
+      name: 'image',
+      title: 'Images',
       type: 'array',
       of: [
         {
-          type: 'object',
-          title: 'Color',
-          name: 'color',
-          fields: [
-            {type: 'string', name: 'name', title: 'Name'},
-            {type: 'string', name: 'value', title: 'Value'},
-          ],
+          type: 'image',
         },
       ],
-    },
-    {
+    }),
+    defineField({
+      name: 'variants',
+      title: 'Variants',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: {
+            type: 'variant',
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'details',
       title: 'Details',
       type: 'string',
-    },
+    }),
   ],
-}
+})

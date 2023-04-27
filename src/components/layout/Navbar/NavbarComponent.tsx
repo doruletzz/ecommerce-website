@@ -22,9 +22,16 @@ import {
 } from '@/constants/paths';
 import { Modal, Ticker } from '..';
 import { SearchBox } from '@/components/product';
+import Submenu from './SubmenuComponent';
+import { Category } from '@/types/Category';
+import { client } from '@/lib/client';
+import { GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+import category from '../../../../sanity-ecommerce/schemas/category';
 
 const Navbar = () => {
 	const { totalQuantity } = useAppSelector((state) => state.cart);
+	const [categories, setCategories] = useState<Category[]>([]);
 
 	const [searchValue, setSearchValue] = useState<string | null>(null);
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -50,6 +57,17 @@ const Navbar = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const fetchCategories = async () => {
+			const query = '*[_type == "category"]';
+			const categories = await client.fetch<Category[]>(query);
+
+			setCategories(categories);
+		};
+
+		if (categories.length === 0) fetchCategories();
+	}, []);
+
 	return (
 		<>
 			<div className='sticky top-0 bg-orange-400 text-slate-50  overflow-hidden'>
@@ -68,33 +86,19 @@ const Navbar = () => {
 						<Link href='/'>KEYCAPS</Link>
 					</div>
 					<ul className='flex justify-center gap-6 flex-1'>
-						<li>
-							<Link
-								onMouseEnter={() => setShowSubMenu(true)}
-								className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-								href={KEYBOARD_ROUTE}
-							>
-								Mechanical Keyboards
-							</Link>
-						</li>
-						<li>
-							<Link
-								onMouseEnter={() => setShowSubMenu(true)}
-								className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-								href={KEYCAPS_ROUTE}
-							>
-								Keycaps
-							</Link>
-						</li>
-						<li>
-							<Link
-								onMouseEnter={() => setShowSubMenu(true)}
-								className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
-								href={DESKMATS_ROUTE}
-							>
-								Deskmats
-							</Link>
-						</li>
+						{categories.map((category) => (
+							<li key={category.slug.current}>
+								<Link
+									onMouseEnter={() => setShowSubMenu(true)}
+									className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
+									href={`/store/${
+										category.slug?.current ?? ''
+									}`}
+								>
+									{category.name}
+								</Link>
+							</li>
+						))}
 					</ul>
 					<ul className='flex gap-6 justify-end flex-1'>
 						<li>
@@ -123,7 +127,8 @@ const Navbar = () => {
 							</Link>
 						</li>
 						<li>
-							<Button
+							<Link
+								href='/cart'
 								id='cart'
 								className='grid relative rounded hover:border-slate-700 hover:border w-8 h-8 place-items-center'
 							>
@@ -136,13 +141,11 @@ const Navbar = () => {
 								) : (
 									<FontAwesomeIcon icon={faShoppingCart} />
 								)}
-							</Button>
+							</Link>
 						</li>
 					</ul>
 				</nav>
-				{showSubMenu && (
-					<div id='submenu' className='h-16 bg-red-400'></div>
-				)}
+				{showSubMenu && <Submenu />}
 			</div>
 		</>
 	);
