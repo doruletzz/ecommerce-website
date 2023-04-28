@@ -25,9 +25,6 @@ import { SearchBox } from '@/components/product';
 import Submenu from './SubmenuComponent';
 import { Category } from '@/types/Category';
 import { client } from '@/lib/client';
-import { GetStaticProps } from 'next';
-import { ParsedUrlQuery } from 'querystring';
-import category from '../../../../sanity-ecommerce/schemas/category';
 
 const Navbar = () => {
 	const { totalQuantity } = useAppSelector((state) => state.cart);
