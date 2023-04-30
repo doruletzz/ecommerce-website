@@ -1,19 +1,22 @@
 import { Button, Field } from '@/components/input';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import React, { MouseEvent, useEffect, useState } from 'react';
 
 const LoginComponent = () => {
+	const supabaseClient = useSupabaseClient();
+	const router = useRouter();
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 
+	const [emailError, setEmailError] = useState('');
 	const [error, setError] = useState('');
-
-	useEffect(() => {
-		console.log(showPassword);
-	}, [showPassword]);
 
 	const validateEmail = (email: string): string | undefined => {
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
@@ -24,12 +27,25 @@ const LoginComponent = () => {
 		e.preventDefault();
 
 		const emailError = validateEmail(email);
-		setError(email);
+		setEmailError(email);
+
+		if (!emailError)
+			supabaseClient.auth
+				.signInWithPassword({
+					email: email,
+					password: password,
+				})
+				.then((res) => {
+					if (res.error) setError(res.error.message);
+					else router.push('/');
+				})
+				.catch((err) => console.error(err));
 	};
 
 	return (
 		<form>
 			<h3>SIGN IN</h3>
+			{error}
 			<Field
 				required
 				id='email'
@@ -44,7 +60,7 @@ const LoginComponent = () => {
 							''
 					)
 				}
-				error={error}
+				error={emailError}
 			/>
 			<Field
 				id='password'
@@ -56,6 +72,7 @@ const LoginComponent = () => {
 				}
 				endAdornment={
 					<Button
+						variant='text'
 						id={`${showPassword ? 'show' : 'hide'} password`}
 						type='button'
 						onClick={() => setShowPassword((prev) => !prev)}
@@ -75,9 +92,15 @@ const LoginComponent = () => {
 					setEmail((e.target as HTMLInputElement).value ?? '')
 				}
 			/>
-			<Button id='forgot password'>Forgot password</Button>
-			<Button id='sign in'>Sign in</Button>
-			<Button id='sign in with google'>Sign in with Google</Button>
+			<Button variant='text' id='forgot password'>
+				Forgot password
+			</Button>
+			<Button onClick={handleLogin} variant='secondary' id='sign in'>
+				Sign in
+			</Button>
+			<Button variant='primary' id='sign in with google'>
+				Sign in with Google
+			</Button>
 		</form>
 	);
 };

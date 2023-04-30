@@ -7,30 +7,37 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export"
+    "export": "next export",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-react": "^0.3.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
+    "raw-body": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.3"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "@stripe/stripe-js": "^1.52.1",
     "autoprefixer": "^10.4.14",
+    "micro-cors": "^0.1.1",
     "next-sanity": "^4.1.6",
     "next-sanity-image": "^6.0.0",
     "postcss": "^8.4.21",
     "react-redux": "^8.0.5",
+    "stripe": "^12.3.0",
     "tailwindcss": "^3.3.1"
   }
 }

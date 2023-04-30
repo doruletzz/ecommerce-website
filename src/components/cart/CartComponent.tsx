@@ -1,16 +1,21 @@
 import { useAppSelector } from '@/features/app/hooks';
 import React from 'react';
 import CartItem from './CartItemComponent';
+import Link from 'next/link';
 
-type Props = {};
+type Props = {
+	isModal?: boolean;
+};
 
-const Cart = () => {
+const Cart = ({ isModal = false }: Props) => {
 	const { items, totalQuantity } = useAppSelector((state) => state.cart);
 
 	return (
-		<div>
-			<h6>Cart</h6>
-			<div id='products'>
+		<div className='h-full flex flex-col overflow-hidden gap-4'>
+			<div>
+				<h6>Cart</h6>
+			</div>
+			<div id='products' className='overflow-auto flex-0'>
 				{items?.map((item, index) => (
 					<CartItem
 						key={index}
@@ -21,9 +26,10 @@ const Cart = () => {
 				))}
 			</div>
 			<div id='total'></div>
-			<div id='checkout'>
+			<Link id='checkout' href='/checkout'>
 				Proceed to checkout {totalQuantity ? `(${totalQuantity})` : ''}
-			</div>
+			</Link>
+			{isModal && <div id='checkout'>View Cart</div>}
 		</div>
 	);
 };

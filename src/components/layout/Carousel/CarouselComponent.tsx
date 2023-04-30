@@ -60,6 +60,7 @@ const CarouselComponent = <T extends ReactNode>({
 				id='slide-left'
 				className={`${title ? 'col-start-3' : 'col-start-1'} w-full`}
 				onClick={() => slideLeft()}
+				variant='secondary'
 			>
 				<FontAwesomeIcon icon={faArrowLeft} />
 			</Button>
@@ -83,6 +84,7 @@ const CarouselComponent = <T extends ReactNode>({
 			</div>
 
 			<Button
+				variant='secondary'
 				id='slide-right'
 				className='row-start-1 col-start-4 w-full'
 				onClick={() => slideRight()}

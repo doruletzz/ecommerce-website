@@ -35,6 +35,7 @@ const RatingComponent = ({ rating, onRate }: Props) => {
 				{stars &&
 					[...new Array(Math.floor(stars))].map((_, index) => (
 						<Button
+							variant='text'
 							id='rating-star'
 							key={index}
 							onClick={() => onRate(index + 1)}
@@ -44,6 +45,7 @@ const RatingComponent = ({ rating, onRate }: Props) => {
 					))}
 				{stars && stars !== Math.floor(stars) && (
 					<Button
+						variant='text'
 						id='rating-star'
 						onClick={() => onRate(Math.ceil(stars) + 1)}
 					>
@@ -53,6 +55,7 @@ const RatingComponent = ({ rating, onRate }: Props) => {
 				{stars &&
 					[...new Array(5 - Math.ceil(stars))].map((_, index) => (
 						<Button
+							variant='text'
 							id='rating-star'
 							key={index}
 							onClick={() => onRate(5 - index)}

@@ -1,4 +1,4 @@
-import { client, useNextImage } from '@/lib/client';
+import { client, useNextImage } from '@/lib/sanityClient';
 import { Banner } from '@/types/Banner';
 import { Product } from '@/types/Product';
 import {
@@ -44,7 +44,7 @@ const NextImage = (props: NextImageProps) => {
 	);
 };
 
-const ProductDetails = ({ productDetails }: Props) => {
+const ProductDetailsPage = ({ productDetails }: Props) => {
 	const { _id, image, name, details, price, variants } = productDetails;
 
 	const [quantity, setQuantity] = useState(1);
@@ -119,6 +119,7 @@ const ProductDetails = ({ productDetails }: Props) => {
 						<h3>Quantity:</h3>
 						<div>
 							<Button
+								variant='secondary'
 								id='remove item'
 								onClick={() =>
 									setQuantity((prev) => Math.max(prev - 1, 1))
@@ -128,6 +129,7 @@ const ProductDetails = ({ productDetails }: Props) => {
 							</Button>
 							{quantity}
 							<Button
+								variant='secondary'
 								id='add item'
 								onClick={() => setQuantity((prev) => prev + 1)}
 							>
@@ -149,7 +151,7 @@ const ProductDetails = ({ productDetails }: Props) => {
 					>
 						<FontAwesomeIcon icon={faCartShopping} /> Add To Cart
 					</Button>
-					<Button id='buy now'>
+					<Button variant='secondary' id='buy now'>
 						<FontAwesomeIcon icon={faDollarSign} /> Buy Now
 					</Button>
 					<div>
@@ -205,4 +207,4 @@ export const getStaticPaths = async () => {
 	};
 };
 
-export default ProductDetails;
+export default ProductDetailsPage;

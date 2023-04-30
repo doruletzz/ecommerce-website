@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Button } from '../input';
-import { useNextImage } from '@/lib/client';
+import { useNextImage } from '@/lib/sanityClient';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowRight,
@@ -43,11 +43,7 @@ const HeroBanner = ({ banner }: Props) => {
 						className='mx-auto'
 						href={`/product/${banner.product}`}
 					>
-						<Button
-							id='cta-button'
-							type='button'
-							className='rounded bg-slate-700 py-3 flex items-center gap-3 px-5 text-zinc-100 font-display text-sm font-extrabold hover:bg-slate-800 hover:gap-6 transition-all duration-400 ease-in-out-expo'
-						>
+						<Button id='cta-button' type='button' variant='primary'>
 							{banner.primaryButtonText}{' '}
 							<FontAwesomeIcon icon={faArrowRight} />
 						</Button>

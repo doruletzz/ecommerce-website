@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from './SearchBarComponent';
 import { Product } from '@/types/Product';
-import { client } from '@/lib/client';
+import { client } from '@/lib/sanityClient';
 
 const SearchBoxComponent = () => {
 	const [value, setValue] = useState('');

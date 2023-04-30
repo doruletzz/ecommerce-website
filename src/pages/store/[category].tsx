@@ -1,6 +1,6 @@
 import { Grid } from '@/components/layout';
 import { ProductCard } from '@/components/product';
-import { client } from '@/lib/client';
+import { client } from '@/lib/sanityClient';
 import { Category } from '@/types/Category';
 import { Product } from '@/types/Product';
 import { GetStaticProps } from 'next';
@@ -37,7 +37,7 @@ interface StaticPropsParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { category } = context.params as StaticPropsParams;
-	const productsByCategoryQuery = `*[_type == "product" && category->slug.current == '${category}']{_id, name, image, slug, price, colors, category->{name}, variants[]->{color, size}}`;
+	const productsByCategoryQuery = `*[_type == "product" && category->slug.current == '${category}']{_id, name, image, slug, price, colors, category->{name}, variants[]->{code, color, size}}`;
 	const productsByCategory = await client.fetch<Product[]>(
 		productsByCategoryQuery
 	);

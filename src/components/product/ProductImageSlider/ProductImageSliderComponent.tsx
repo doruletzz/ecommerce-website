@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-import { useNextImage } from '../../../lib/client';
+import { useNextImage } from '../../../lib/sanityClient';
 import Image from 'next/image';
 
 type Props = {
@@ -20,14 +20,15 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 
 	return (
 		<div
-			className={`group w-full h-full flex-1 object-cover relative pb-16 group-hover:pb-0 transition-all duration-[1300ms] ease-in-out-expo ${
+			className={`group w-full h-full flex-1 object-cover relative transition-all duration-[1300ms] ease-in-out-expo ${
 				className ?? ''
 			}`}
 		>
 			<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
 				<Button
+					variant='secondary'
 					id='left-arrow'
-					className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 hover:scale-110  animate-slide-up ${
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
 						imgIndex === 0 ? 'text-opacity-50' : 'text-opacity-100'
 					}`}
 					onClick={() => {
@@ -38,8 +39,9 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 					<FontAwesomeIcon icon={faArrowLeft} />
 				</Button>
 				<Button
+					variant='secondary'
 					id='right-arrow'
-					className={`p-6 pointer-events-auto text-slate-300 hover:text-slate-100 hover:scale-110  animate-slide-up ${
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
 						imgIndex === product.image.length - 1
 							? 'text-opacity-50'
 							: 'text-opacity-100'
@@ -65,7 +67,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				))}
 			</ul>
 			<Link href={`/product/${product.slug.current}`}>
-				<div className='w-full h-full object-cover rounded-xl relative border-slate-700 border -z-10 overflow-hidden'>
+				<div className='w-full h-full object-cover rounded-xl relative border-slate-700 border overflow-hidden'>
 					<Image
 						key={`previous ${imgIndex}`}
 						src={
@@ -87,7 +89,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 						width={620}
 						height={620}
 						alt={product.name}
-						className={`w-full h-full object-cover ${
+						className={`w-full h-full object-cover absolute ${
 							direction === 'left' ? 'animate-slide-left' : ''
 						} ${
 							direction === 'right' ? 'animate-slide-right' : ''

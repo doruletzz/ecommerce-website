@@ -24,14 +24,20 @@ import { Modal, Ticker } from '..';
 import { SearchBox } from '@/components/product';
 import Submenu from './SubmenuComponent';
 import { Category } from '@/types/Category';
-import { client } from '@/lib/client';
+import { client } from '@/lib/sanityClient';
+import { Cart } from '@/components/cart';
+import { useSession } from '@supabase/auth-helpers-react';
 
 const Navbar = () => {
+	const session = useSession();
+
 	const { totalQuantity } = useAppSelector((state) => state.cart);
 	const [categories, setCategories] = useState<Category[]>([]);
 
 	const [searchValue, setSearchValue] = useState<string | null>(null);
-	const [showModal, setShowModal] = useState<boolean>(false);
+	const [showSearchboxModal, setShowSearchboxModal] =
+		useState<boolean>(false);
+	const [showCartModal, setShowCartModal] = useState<boolean>(false);
 
 	const [showSubMenu, setShowSubMenu] = useState(false);
 	const [scrollTop, setScrollTop] = useState(0);
@@ -67,9 +73,9 @@ const Navbar = () => {
 
 	return (
 		<>
-			<div className='sticky top-0 bg-orange-400 text-slate-50  overflow-hidden'>
+			{/* <div className='sticky top-0 bg-orange-400 text-slate-50  overflow-hidden'>
 				<Ticker>30% OFF WITH CODE: KEYZ</Ticker>
-			</div>
+			</div> */}
 			<div
 				className={`relative ${isSmall ? 'h-12' : 'h-16'} bg-slate-200`}
 				onMouseLeave={() => setShowSubMenu(false)}
@@ -100,16 +106,21 @@ const Navbar = () => {
 					<ul className='flex gap-6 justify-end flex-1'>
 						<li>
 							<Button
+								variant='secondary'
 								id='search'
 								className='flex gap-3 rounded hover:border-slate-700 h-8 hover:border px-3 place-items-center'
-								onClick={() => setShowModal((prev) => !prev)}
+								onClick={() =>
+									setShowSearchboxModal((prev) => !prev)
+								}
 							>
 								<FontAwesomeIcon icon={faSearch} />
 								<p>Search</p>
 							</Button>
-							{showModal && (
+							{showSearchboxModal && (
 								<Modal
-									onBackdropClick={() => setShowModal(false)}
+									onBackdropClick={() =>
+										setShowSearchboxModal(false)
+									}
 								>
 									<SearchBox />
 								</Modal>
@@ -118,15 +129,16 @@ const Navbar = () => {
 						<li>
 							<Link
 								className='grid rounded hover:border-slate-700 hover:border w-8 h-8 place-items-center'
-								href='/login'
+								href={session?.user ? '/account' : '/login'}
 							>
 								<FontAwesomeIcon icon={faUser} />
 							</Link>
 						</li>
 						<li>
-							<Link
-								href='/cart'
+							<Button
 								id='cart'
+								onClick={() => setShowCartModal(true)}
+								variant='secondary'
 								className='grid relative rounded hover:border-slate-700 hover:border w-8 h-8 place-items-center'
 							>
 								{totalQuantity > 0 ? (
@@ -138,7 +150,16 @@ const Navbar = () => {
 								) : (
 									<FontAwesomeIcon icon={faShoppingCart} />
 								)}
-							</Link>
+							</Button>
+							{showCartModal && (
+								<Modal
+									onBackdropClick={() =>
+										setShowCartModal(false)
+									}
+								>
+									<Cart isModal={true} />
+								</Modal>
+							)}
 						</li>
 					</ul>
 				</nav>

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
-	variant: Variant;
+	variant?: Variant | null;
 	product: Product;
 	quantity: number;
 };
@@ -15,22 +15,24 @@ type Props = {
 const CartItemComponent = ({ product, variant, quantity }: Props) => {
 	return (
 		<div>
-			<div className='w-96 h-[480px]'>
-				<ProductImageSlider product={product} className='pb-0' />
+			<div className='w-48 group relative -z-10'>
+				<ProductImageSlider product={product} />
 			</div>
 			<Link href={'/product/' + product.slug.current}>
 				<h4>{product.name}</h4>
 			</Link>
-			<p>{(variant.price ?? product.price) * quantity}$</p>
-			<p>{`Color: ${variant.color.name}`}</p>
-			<p>{`Size: ${variant.size}`}</p>
+			<p>{(variant?.price ?? product.price) * quantity}$</p>
+			{variant && variant.color && (
+				<p>{`Color: ${variant.color.name}`}</p>
+			)}
+			{variant && variant.size && <p>{`Size: ${variant.size}`}</p>}
 			<div>
 				<p>Quantity</p>
-				<Button id='minus'>
+				<Button variant='secondary' id='minus'>
 					<FontAwesomeIcon icon={faMinus} />
 				</Button>
 				{quantity}
-				<Button id='plus'>
+				<Button variant='secondary' id='plus'>
 					<FontAwesomeIcon icon={faPlus} />
 				</Button>
 			</div>

@@ -1,7 +1,7 @@
 import { Banner } from '@/types/Banner';
 import { Product } from '@/types/Product';
 
-import { client } from '../lib/client';
+import { client } from '../lib/sanityClient';
 import { GetServerSideProps } from 'next';
 import { Carousel, HeroBanner } from '@/components/layout';
 import { ProductCard } from '@/components/product';
@@ -11,7 +11,7 @@ type Props = {
 	banner: Banner;
 };
 
-const Home = ({ products, banner }: Props) => {
+const HomePage = ({ products, banner }: Props) => {
 	return (
 		<>
 			<HeroBanner banner={banner} />
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	);
 
 	const productsQuery =
-		'*[_type == "product"]{_id, name, image, slug, price, colors, category->{name}, variants[]->{color, size}}';
+		'*[_type == "product"]{_id, name, image, slug, price, colors, category->{name}, variants[]->{code, color, size}}';
 	const products = await client.fetch<Product[]>(productsQuery);
 
 	const bannersQuery = '*[_type == "banner"]';
@@ -47,4 +47,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	};
 };
 
-export default Home;
+export default HomePage;

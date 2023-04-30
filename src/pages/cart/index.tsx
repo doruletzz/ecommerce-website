@@ -1,7 +1,7 @@
 import { Cart } from '@/components/cart';
 import React from 'react';
 
-const index = () => {
+const CartPage = () => {
 	return (
 		<div>
 			<Cart />
@@ -9,4 +9,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default CartPage;

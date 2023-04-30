@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       spacing: {
         '128': '32rem',
+        '256': '48rem',
       },
       aspectRatio: {
         'card': '6 / 7'
