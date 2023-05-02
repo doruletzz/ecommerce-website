@@ -45,13 +45,16 @@ module.exports = {
         }
       },
       fontFamily: {
-        'display': ['Syne', 'sans-serif'],
-        'body': ['DM Sans', 'sans-serif'],
+        'display': ['Space Mono', 'serif'],
+        'body': ['Spline Sans', 'sans-serif'],
       },
       transitionTimingFunction: {
         'in-out-expo': 'cubic-bezier(.88,-0.01,.12,1)',
         'in-expo': 'cubic-bezier(0,.77,.12,1)',
         'out-expo': 'cubic-bezier(.69,-0.01,.96,.49)',
+      },
+      transitionProperty: {
+        'width': 'width'
       },
       animation: {
         'inifinte-scroll': 'infiniteScroll 40s linear infinite',

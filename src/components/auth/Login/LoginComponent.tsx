@@ -26,10 +26,9 @@ const LoginComponent = () => {
 	const handleLogin = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
-		const emailError = validateEmail(email);
-		setEmailError(email);
+		const error = validateEmail(email);
 
-		if (!emailError)
+		if (!error)
 			supabaseClient.auth
 				.signInWithPassword({
 					email: email,
@@ -40,11 +39,12 @@ const LoginComponent = () => {
 					else router.push('/');
 				})
 				.catch((err) => console.error(err));
+		else setEmailError(error);
 	};
 
 	return (
 		<form>
-			<h3>SIGN IN</h3>
+			<h3 className='text-2xl font-display font-bold'>SIGN IN</h3>
 			{error}
 			<Field
 				required
@@ -55,7 +55,7 @@ const LoginComponent = () => {
 					setEmail((e.target as HTMLInputElement).value ?? '')
 				}
 				onBlur={(e) =>
-					setError(
+					setEmailError(
 						validateEmail((e.target as HTMLInputElement).value) ??
 							''
 					)
@@ -95,7 +95,12 @@ const LoginComponent = () => {
 			<Button variant='text' id='forgot password'>
 				Forgot password
 			</Button>
-			<Button onClick={handleLogin} variant='secondary' id='sign in'>
+			<Button
+				onClick={handleLogin}
+				variant='secondary'
+				id='sign in'
+				disabled={!!emailError}
+			>
 				Sign in
 			</Button>
 			<Button variant='primary' id='sign in with google'>

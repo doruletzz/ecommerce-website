@@ -35,7 +35,10 @@ const TickerComponent = ({ children }: Props) => {
 	}, [containerRef.current, totalWidth]);
 
 	return (
-		<div ref={containerRef} className='animate-inifinte-scroll flex'>
+		<div
+			ref={containerRef}
+			className='animate-inifinte-scroll flex font-display tracking-tighter'
+		>
 			<div className='whitespace-nowrap p-1' ref={elementRef}>
 				{children}
 			</div>

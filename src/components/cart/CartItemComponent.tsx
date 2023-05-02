@@ -15,7 +15,7 @@ type Props = {
 const CartItemComponent = ({ product, variant, quantity }: Props) => {
 	return (
 		<div>
-			<div className='w-48 group relative -z-10'>
+			<div className='w-48 group relative'>
 				<ProductImageSlider product={product} />
 			</div>
 			<Link href={'/product/' + product.slug.current}>

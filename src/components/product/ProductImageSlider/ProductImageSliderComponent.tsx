@@ -24,48 +24,6 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				className ?? ''
 			}`}
 		>
-			<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
-				<Button
-					variant='secondary'
-					id='left-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
-						imgIndex === 0 ? 'text-opacity-50' : 'text-opacity-100'
-					}`}
-					onClick={() => {
-						setImgIndex((prev) => Math.max(0, prev - 1));
-						setDirection('right');
-					}}
-				>
-					<FontAwesomeIcon icon={faArrowLeft} />
-				</Button>
-				<Button
-					variant='secondary'
-					id='right-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
-						imgIndex === product.image.length - 1
-							? 'text-opacity-50'
-							: 'text-opacity-100'
-					}`}
-					onClick={() => {
-						setImgIndex((prev) =>
-							Math.min(product.image.length - 1, prev + 1)
-						);
-						setDirection('left');
-					}}
-				>
-					<FontAwesomeIcon icon={faArrowRight} />
-				</Button>
-			</div>
-			<ul className='hidden absolute bottom-6 group-hover:flex gap-4 left-1/2 transform -translate-x-1/2'>
-				{product.image?.map((_, i) => (
-					<li
-						key={i}
-						className={`w-1 h-1 rounded-full  animate-slide-up ${
-							i === imgIndex ? 'bg-slate-700' : 'bg-slate-400'
-						}`}
-					/>
-				))}
-			</ul>
 			<Link href={`/product/${product.slug.current}`}>
 				<div className='w-full h-full object-cover rounded-xl relative border-slate-700 border overflow-hidden'>
 					<Image
@@ -117,6 +75,48 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 					/>
 				</div>
 			</Link>
+			<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
+				<Button
+					variant='secondary'
+					id='left-arrow'
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
+						imgIndex === 0 ? 'text-opacity-50' : 'text-opacity-100'
+					}`}
+					onClick={() => {
+						setImgIndex((prev) => Math.max(0, prev - 1));
+						setDirection('right');
+					}}
+				>
+					<FontAwesomeIcon icon={faArrowLeft} />
+				</Button>
+				<Button
+					variant='secondary'
+					id='right-arrow'
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
+						imgIndex === product.image.length - 1
+							? 'text-opacity-50'
+							: 'text-opacity-100'
+					}`}
+					onClick={() => {
+						setImgIndex((prev) =>
+							Math.min(product.image.length - 1, prev + 1)
+						);
+						setDirection('left');
+					}}
+				>
+					<FontAwesomeIcon icon={faArrowRight} />
+				</Button>
+			</div>
+			<ul className='hidden absolute bottom-6 group-hover:flex gap-4 left-1/2 transform -translate-x-1/2'>
+				{product.image?.map((_, i) => (
+					<li
+						key={i}
+						className={`w-1 h-1 rounded-full  animate-slide-up ${
+							i === imgIndex ? 'bg-slate-700' : 'bg-slate-400'
+						}`}
+					/>
+				))}
+			</ul>
 		</div>
 	);
 };

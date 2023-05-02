@@ -9,6 +9,7 @@ type Props = {
 	variant?: 'primary' | 'secondary' | 'text';
 	onClick?: MouseEventHandler;
 	className?: string;
+	disabled?: boolean;
 	children?: ReactNode;
 	style?: CSSProperties;
 };

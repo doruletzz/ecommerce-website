@@ -12,16 +12,16 @@ const ModalComponent = ({
 	backdrop = true,
 }: Props) => {
 	return (
-		<div className='fixed z-50 w-full h-full inset-0 grid place-items-center'>
+		<div className='fixed w-full h-full inset-0 grid place-items-center'>
 			{backdrop && (
 				<div
 					onClick={onBackdropClick}
-					className='absolute bg-black opacity-20 inset-0 cursor-pointer'
+					className='fixed bg-black opacity-30 inset-0 cursor-pointer overscroll-none'
 				/>
 			)}
 			<div
 				id='modal'
-				className='absolute p-4 bg-slate-400 rounded min-h-128'
+				className='absolute p-4 bg-slate-400 rounded min-h-128 animate-slide-up'
 			>
 				{children}
 			</div>

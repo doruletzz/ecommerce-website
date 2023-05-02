@@ -10,6 +10,7 @@ type Props<T> = {
 	id: string;
 	type?: string;
 	value: T;
+	className?: string;
 	onChange?: ChangeEventHandler;
 	onBlur?: ChangeEventHandler;
 	ref?: Ref<HTMLInputElement>;
@@ -18,12 +19,14 @@ type Props<T> = {
 const InputComponent = <T extends string>({
 	value,
 	type = 'text',
+	className,
 	onChange,
 	onBlur,
 	ref,
 }: Props<T>) => {
 	return (
 		<input
+			className={className}
 			ref={ref}
 			type={type}
 			defaultValue={value}

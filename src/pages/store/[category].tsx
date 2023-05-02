@@ -37,7 +37,7 @@ interface StaticPropsParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { category } = context.params as StaticPropsParams;
-	const productsByCategoryQuery = `*[_type == "product" && category->slug.current == '${category}']{_id, name, image, slug, price, colors, category->{name}, variants[]->{code, color, size}}`;
+	const productsByCategoryQuery = `*[_type == "product" && category->slug.current == '${category}']{_id, name, discount, image, slug, price, colors, category->{name}, variants[]->{code, color, size}}`;
 	const productsByCategory = await client.fetch<Product[]>(
 		productsByCategoryQuery
 	);

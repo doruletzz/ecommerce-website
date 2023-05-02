@@ -25,6 +25,7 @@ export type Product = {
 	image: Array<string>;
 	slug: Slug;
 	price: number;
+	discount?: number;
 	details: string;
 	variants: Variant[];
 };

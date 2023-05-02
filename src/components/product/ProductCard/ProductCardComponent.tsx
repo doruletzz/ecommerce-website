@@ -73,16 +73,30 @@ const ProductCardComponent = ({ product }: Props) => {
 				product={product}
 				className='pb-16 group-hover:pb-0 '
 			/>
-			<div className='h-16 pt-1 w-full flex absolute bottom-0 justify-between group-hover:hidden animate-slide-up'>
+			<div className='h-16 pt-1 gap-2 w-full flex absolute bottom-0 justify-between group-hover:hidden animate-slide-up text-left'>
 				<div className='shrink'>
-					<h6 className='text-md font-bold'>{product.name}</h6>
+					<h6 className='text-lg leading-tight tracking-tight font-bold font-display'>
+						{product.name}
+					</h6>
 					<p className='text-sm'>{product.category?.name}</p>
 				</div>
-				<h5 className='text-xl font-extrabold whitespace-nowrap text-orange-900'>
-					${product.price}
-				</h5>
+				<div>
+					<h5 className='text-2xl font-extrabold whitespace-nowrap text-orange-900 font-display'>
+						${product.price}
+					</h5>
+
+					{product.discount && (
+						<p className='line-through text-right'>
+							$
+							{(
+								(product.price / (100 - product.discount)) *
+								100
+							).toFixed(2)}
+						</p>
+					)}
+				</div>
 			</div>
-			<div className='hidden group-hover:flex group-hover:absolute top-5 bottom-5 flex-col justify-between left-4 animate-slide-up'>
+			<div className='hidden group-hover:flex group-hover:absolute top-4 bottom-4 flex-col justify-between left-4 animate-slide-up'>
 				{sizes && (
 					<div
 						id='sizes'
@@ -94,7 +108,7 @@ const ProductCardComponent = ({ product }: Props) => {
 								variant='secondary'
 								key={index}
 								onClick={() => setSelectedSize(size)}
-								className={`bg-slate-200 ${
+								className={`font-display ${
 									size === selectedSize
 										? 'p-1 border border-slate-700'
 										: 'p-1'
@@ -124,23 +138,31 @@ const ProductCardComponent = ({ product }: Props) => {
 					</div>
 				)}
 			</div>
-			<div
+			<Button
+				onClick={() =>
+					handleQuickBuy(
+						product,
+						getVariant(selectedColor, selectedSize)
+					)
+				}
+				variant='secondary'
 				id='quickbuy'
-				className='hidden group-hover:block group-hover:absolute top-5 right-4 animate-slide-up'
+				className={`${
+					product.discount ? 'block' : 'hidden'
+				} group-hover:block absolute top-4 right-1/2 py-2 px-4 font-display font-bold text-sm bg-orange-600 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform] duration-[1300ms] ease-in-out-expo translate-x-1/2 `}
 			>
-				<Button
+				{product.discount && (
+					<p className='group-hover:hidden block animate-slide-up'>
+						{product.discount}% OFF
+					</p>
+				)}
+				<div
 					id='cart'
-					variant='primary'
-					onClick={() =>
-						handleQuickBuy(
-							product,
-							getVariant(selectedColor, selectedSize)
-						)
-					}
+					className='group-hover:block w-7 hidden animate-slide-up'
 				>
 					<FontAwesomeIcon icon={faCartShopping} />
-				</Button>
-			</div>
+				</div>
+			</Button>
 		</div>
 	);
 };

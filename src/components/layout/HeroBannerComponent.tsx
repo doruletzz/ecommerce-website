@@ -11,17 +11,20 @@ import {
 	faSquareUpRight,
 	faUpDownLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { Product } from '@/types/Product';
+import { ProductCard } from '../product';
 
 type Props = {
 	banner: Banner;
+	product?: Product;
 };
 
-const HeroBanner = ({ banner }: Props) => {
+const HeroBanner = ({ banner, product }: Props) => {
 	const imgProps = useNextImage(banner.image);
 	return (
 		<>
 			{banner && (
-				<div className='flex flex-col text-center mt-32 gap-6 max-w-7xl mx-auto min-h-screen'>
+				<div className='flex flex-col text-center mt-32 gap-4 max-w-7xl mx-auto min-h-screen'>
 					<Image
 						width={imgProps.width}
 						height={imgProps.height}
@@ -30,27 +33,31 @@ const HeroBanner = ({ banner }: Props) => {
 						loader={imgProps.loader}
 						alt='keyboard'
 					/>
-					<p className='bg-red-500 text-zinc-700 text-sm mx-auto py-1 px-3 rounded-full'>
-						{banner.smallText}
-					</p>
-					<h1 className='text-slate-800 text-5xl font-extrabold font-display'>
-						{banner.largeText}
-					</h1>
-					<h3 className='text-slate-600 text-lg max-w-lg mx-auto'>
+					<h3 className='text-orange-600 text-sm mx-auto '>
 						{banner.midText}
 					</h3>
+					<h1 className='text-slate-900 text-6xl font-extrabold font-display mb-4 '>
+						{banner.largeText}
+					</h1>
 					<Link
 						className='mx-auto'
 						href={`/product/${banner.product}`}
 					>
-						<Button id='cta-button' type='button' variant='primary'>
+						<Button
+							id='cta-button'
+							type='button'
+							variant='primary'
+							className='py-3 px-5 text-lg uppercase'
+						>
 							{banner.primaryButtonText}{' '}
 							<FontAwesomeIcon icon={faArrowRight} />
 						</Button>
 					</Link>
-					<div className=''>
-						<p>{banner.discount}</p>
-					</div>
+					{product && (
+						<div className='w-128 mx-auto mt-32 delay-700'>
+							<ProductCard product={product} />
+						</div>
+					)}
 				</div>
 			)}
 		</>

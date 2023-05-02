@@ -25,6 +25,13 @@ export default defineType({
       type: 'number',
     }),
     defineField({
+      name: 'discount',
+      title: 'Discount',
+      type: 'number',
+      validation: (rule) =>
+        rule.greaterThan(0).lessThan(100).error('Value must be between 0 and 100'),
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'reference',

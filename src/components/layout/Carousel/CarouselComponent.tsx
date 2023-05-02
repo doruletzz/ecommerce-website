@@ -18,16 +18,16 @@ const CarouselComponent = <T extends ReactNode>({
 	const itemRef = useRef(null);
 
 	const basisVariants = {
-		1: 'basis-1/3',
-		2: 'basis-1/2',
-		3: 'basis-1/3',
-		4: 'basis-1/4',
-		6: 'basis-1/6',
-		12: 'basis-1/12',
+		1: 'basis-[calc(100%)]',
+		2: 'basis-[calc(50%-3rem/2*1)]',
+		3: 'basis-[calc(33.33%-3rem/3*2)]',
+		4: 'basis-[calc(25%-3rem/4*3)]',
+		6: 'basis-[calc(16.66%-3rem/6*5)]',
+		12: 'basis-[calc(8.33%-3rem/12*11)]',
 	};
 
 	const slideLeft = () => {
-		const gap = 24;
+		const gap = 48;
 		let slider = sliderRef.current;
 		if (slider)
 			slider.scrollLeft =
@@ -37,7 +37,7 @@ const CarouselComponent = <T extends ReactNode>({
 	};
 
 	const slideRight = () => {
-		const gap = 24;
+		const gap = 48;
 		let slider = sliderRef.current;
 		if (slider)
 			slider.scrollLeft =
@@ -49,10 +49,10 @@ const CarouselComponent = <T extends ReactNode>({
 	return (
 		<div
 			id='carousel'
-			className='grid grid-cols-[16px_minmax(0,_4fr)_16px] gap-2 items-center justify-between'
+			className='grid grid-cols-[16px_minmax(0,_4fr)_16px] gap-4 items-center justify-between'
 		>
 			{title && (
-				<h2 className='text-4xl text-blue-800 font-bold col-span-2'>
+				<h2 className='text-4xl tracking-tighter text-blue-800 font-bold col-span-2 font-display'>
 					{title}
 				</h2>
 			)}
@@ -67,7 +67,7 @@ const CarouselComponent = <T extends ReactNode>({
 			<div
 				ref={sliderRef}
 				id='slider'
-				className={`flex w-full scroll-smooth overflow-auto transition-all snap-x ${
+				className={`flex w-full gap-12 scroll-smooth overflow-y-hidden overflow-x-auto transition-all snap-x relative ${
 					title ? 'col-span-4' : 'col-span-2'
 				}`}
 			>

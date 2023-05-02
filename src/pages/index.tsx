@@ -14,14 +14,16 @@ type Props = {
 const HomePage = ({ products, banner }: Props) => {
 	return (
 		<>
-			<HeroBanner banner={banner} />
-			<Carousel
-				pageSize='4'
-				title='Best Selling Products'
-				items={products.map((product) => (
-					<ProductCard key={product._id} product={product} />
-				))}
-			/>
+			<div className='mx-32'>
+				<HeroBanner banner={banner} product={products[0]} />
+				<Carousel
+					pageSize='4'
+					title='Best Selling Products'
+					items={products.map((product) => (
+						<ProductCard key={product._id} product={product} />
+					))}
+				/>
+			</div>
 		</>
 	);
 };
@@ -33,8 +35,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	);
 
 	const productsQuery =
-		'*[_type == "product"]{_id, name, image, slug, price, colors, category->{name}, variants[]->{code, color, size}}';
+		'*[_type == "product"]{_id, name, image, slug, price, discount, colors, category->{name}, variants[]->{code, color, size}}';
 	const products = await client.fetch<Product[]>(productsQuery);
+
+	console.log(products);
 
 	const bannersQuery = '*[_type == "banner"]';
 	const banners = await client.fetch<Banner[]>(bannersQuery);

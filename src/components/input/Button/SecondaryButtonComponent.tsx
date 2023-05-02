@@ -4,6 +4,7 @@ type Props = {
 	id: string;
 	type?: 'button' | 'submit' | 'reset';
 	onClick?: MouseEventHandler;
+	disabled?: boolean;
 	className?: string;
 	children?: ReactNode;
 	style?: CSSProperties;
@@ -13,6 +14,7 @@ const SecondaryButtonComponent = ({
 	id,
 	type,
 	style,
+	disabled,
 	className,
 	onClick,
 	children,
@@ -20,6 +22,7 @@ const SecondaryButtonComponent = ({
 	return (
 		<button
 			id={id}
+			disabled={disabled}
 			aria-label={id}
 			style={style}
 			type={type}

@@ -6,6 +6,7 @@ type Props = {
 	onClick?: MouseEventHandler;
 	className?: string;
 	children?: ReactNode;
+	disabled?: boolean;
 	style?: CSSProperties;
 };
 
@@ -14,12 +15,14 @@ const PrimaryButtonComponent = ({
 	type,
 	style,
 	className,
+	disabled,
 	onClick,
 	children,
 }: Props) => {
 	return (
 		<button
 			id={id}
+			disabled={disabled}
 			aria-label={id}
 			style={style}
 			type={type}

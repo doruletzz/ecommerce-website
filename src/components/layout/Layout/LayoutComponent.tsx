@@ -13,7 +13,7 @@ const Layout = ({ children }: Props) => {
 			<Head>
 				<title>KeyCaps</title>
 			</Head>
-			<header className='sticky top-0'>
+			<header className='sticky top-0 z-20'>
 				<Navbar />
 			</header>
 			<main>{children}</main>
