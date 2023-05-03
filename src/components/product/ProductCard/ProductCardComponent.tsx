@@ -65,7 +65,7 @@ const ProductCardComponent = ({ product }: Props) => {
 			setColors(uniqueColors);
 			setSizes(uniqueSizes);
 		}
-	}, [product.variants]);
+	}, [product, product.variants]);
 
 	return (
 		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up'>

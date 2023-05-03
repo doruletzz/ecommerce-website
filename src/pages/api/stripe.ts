@@ -7,6 +7,12 @@ const stripe = new Stripe(process.env.NEXT_STRIPE_SECRET_KEY ?? '', {
 	apiVersion: '2022-11-15',
 });
 
+// Shape of the response when an error is thrown
+interface ErrorResponse {
+	statusCode?: number;
+	message: string;
+}
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
@@ -62,8 +68,10 @@ export default async function handler(
 			const session = await stripe.checkout.sessions.create(params);
 			res.status(200).json(session);
 			// res.redirect(303, session.url);
-		} catch (err) {
-			res.status(err.statusCode || 500).json(err.message);
+		} catch (err: unknown) {
+			res.status((err as ErrorResponse).statusCode || 500).json(
+				(err as ErrorResponse).message
+			);
 		}
 	} else {
 		res.setHeader('Allow', 'POST');

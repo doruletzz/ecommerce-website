@@ -74,7 +74,7 @@ const Navbar = () => {
 	return (
 		<>
 			<div className='sticky top-0 bg-orange-400 text-slate-50  overflow-hidden'>
-				<Ticker>30% OFF WITH CODE:"KEYZ"</Ticker>
+				<Ticker>{'30% OFF WITH CODE:"KEYZ"'}</Ticker>
 			</div>
 			<div
 				className={`relative ${isSmall ? 'h-12' : 'h-16'} bg-slate-200`}

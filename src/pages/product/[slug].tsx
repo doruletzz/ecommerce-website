@@ -73,10 +73,6 @@ const ProductDetailsPage = ({ productDetails }: Props) => {
 		setImgIndex(prevImgIndex);
 	};
 
-	useEffect(() => {
-		console.log(productDetails);
-	}, []);
-
 	return (
 		<div className='grid grid-cols-2'>
 			<div className='flex flex-col'>
