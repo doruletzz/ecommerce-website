@@ -5,7 +5,6 @@ import { client } from '../lib/sanityClient';
 import { GetServerSideProps } from 'next';
 import { Carousel, HeroBanner } from '@/components/layout';
 import { ProductCard } from '@/components/product';
-import product from '../../sanity-ecommerce/schemas/product';
 import { Collection } from '@/types/Collection';
 
 type Props = {
