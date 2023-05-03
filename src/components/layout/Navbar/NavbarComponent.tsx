@@ -39,7 +39,7 @@ const Navbar = () => {
 		useState<boolean>(false);
 	const [showCartModal, setShowCartModal] = useState<boolean>(false);
 
-	const [showSubMenu, setShowSubMenu] = useState(false);
+	const [submenuCategory, SetSubmenuCategory] = useState<string | null>();
 	const [scrollTop, setScrollTop] = useState(0);
 
 	const [isSmall, setIsSmall] = useState(false);
@@ -78,7 +78,7 @@ const Navbar = () => {
 			</div>
 			<div
 				className={`relative ${isSmall ? 'h-12' : 'h-16'} bg-slate-200`}
-				onMouseLeave={() => setShowSubMenu(false)}
+				onMouseLeave={() => SetSubmenuCategory(null)}
 			>
 				<nav
 					className={`flex w-full  ${
@@ -92,7 +92,9 @@ const Navbar = () => {
 						{categories.map((category) => (
 							<li key={category.slug.current}>
 								<Link
-									onMouseEnter={() => setShowSubMenu(true)}
+									onMouseEnter={() =>
+										SetSubmenuCategory(category._id)
+									}
 									className='grid rounded hover:border-slate-700 hover:border px-4 h-8 place-items-center'
 									href={`/store/${
 										category.slug?.current ?? ''
@@ -106,7 +108,7 @@ const Navbar = () => {
 					<ul className='flex gap-6 justify-end flex-1'>
 						<li>
 							<Button
-								variant='secondary'
+								variant='text'
 								id='search'
 								className='flex gap-3 rounded hover:border-slate-700 h-8 hover:border px-3 place-items-center'
 								onClick={() =>
@@ -138,7 +140,7 @@ const Navbar = () => {
 							<Button
 								id='cart'
 								onClick={() => setShowCartModal(true)}
-								variant='secondary'
+								variant='text'
 								className='grid relative rounded hover:border-slate-700 hover:border w-8 h-8 place-items-center'
 							>
 								{totalQuantity > 0 ? (
@@ -163,7 +165,7 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</nav>
-				{showSubMenu && <Submenu />}
+				{submenuCategory && <Submenu categoryId={submenuCategory} />}
 			</div>
 		</>
 	);

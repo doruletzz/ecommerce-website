@@ -8,7 +8,7 @@ module.exports = {
         '256': '48rem',
       },
       aspectRatio: {
-        'card': '6 / 7'
+        'card': '3 / 4'
       },
       keyframes: {
         'infiniteScroll': {

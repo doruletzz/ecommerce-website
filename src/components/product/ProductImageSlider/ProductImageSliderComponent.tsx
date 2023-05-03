@@ -20,7 +20,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 
 	return (
 		<div
-			className={`group w-full h-full flex-1 object-cover relative transition-all duration-[1300ms] ease-in-out-expo ${
+			className={`group w-full h-full flex-1 object-cover relative ${
 				className ?? ''
 			}`}
 		>
@@ -79,7 +79,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				<Button
 					variant='secondary'
 					id='left-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors  animate-slide-up p-3 ${
 						imgIndex === 0 ? 'text-opacity-50' : 'text-opacity-100'
 					}`}
 					onClick={() => {
@@ -92,7 +92,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				<Button
 					variant='secondary'
 					id='right-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-110  animate-slide-up ${
+					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors p-3 animate-slide-up ${
 						imgIndex === product.image.length - 1
 							? 'text-opacity-50'
 							: 'text-opacity-100'

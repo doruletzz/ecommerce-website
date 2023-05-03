@@ -7,6 +7,8 @@ type Props = {
 	disabled?: boolean;
 	className?: string;
 	children?: ReactNode;
+	onMouseEnter?: MouseEventHandler;
+	onMouseLeave?: MouseEventHandler;
 	style?: CSSProperties;
 };
 
@@ -17,6 +19,8 @@ const SecondaryButtonComponent = ({
 	disabled,
 	className,
 	onClick,
+	onMouseEnter,
+	onMouseLeave,
 	children,
 }: Props) => {
 	return (
@@ -26,10 +30,12 @@ const SecondaryButtonComponent = ({
 			aria-label={id}
 			style={style}
 			type={type}
-			className={`flex gap-3 rounded hover:border-slate-700 hover:border place-items-center color-slate-700 ${
+			className={`flex gap-3 rounded border-slate-700 border place-items-center color-slate-700 ${
 				className ?? ''
 			}`}
 			onClick={onClick}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
 		>
 			{children}
 		</button>

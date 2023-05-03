@@ -8,6 +8,8 @@ type Props = {
 	type?: 'button' | 'submit' | 'reset';
 	variant?: 'primary' | 'secondary' | 'text';
 	onClick?: MouseEventHandler;
+	onMouseEnter?: MouseEventHandler;
+	onMouseLeave?: MouseEventHandler;
 	className?: string;
 	disabled?: boolean;
 	children?: ReactNode;

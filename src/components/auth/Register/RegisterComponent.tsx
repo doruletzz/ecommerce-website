@@ -34,7 +34,6 @@ const RegisterComponent = () => {
 					password: password,
 				})
 				.then((res) => {
-					console.log(res);
 					if (res.error) setError(res.error?.message);
 				})
 				.catch((err) => console.error(err));

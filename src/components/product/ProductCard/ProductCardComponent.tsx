@@ -28,6 +28,8 @@ const ProductCardComponent = ({ product }: Props) => {
 	const [selectedColor, setSelectedColor] = useState<Color>();
 	const [selectedSize, setSelectedSize] = useState<string>();
 
+	const [isQuickBuyHovered, setIsQuickBuyHovered] = useState<boolean>(false);
+
 	const getVariant = (color?: Color, size?: string): Variant | null => {
 		let variants = product.variants;
 
@@ -69,11 +71,20 @@ const ProductCardComponent = ({ product }: Props) => {
 
 	return (
 		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up'>
-			<ProductImageSlider
-				product={product}
-				className='pb-16 group-hover:pb-0 '
-			/>
-			<div className='h-16 pt-1 gap-2 w-full flex absolute bottom-0 justify-between group-hover:hidden animate-slide-up text-left'>
+			<div
+				className={`pb-16 group-hover:pb-0 h-full  transition-all duration-[1300ms] ease-in-out-expo  ${
+					isQuickBuyHovered ? 'group-hover:pb-16' : ''
+				}`}
+			>
+				<ProductImageSlider product={product} />
+			</div>
+			<div
+				className={`h-16 pt-1 gap-2 w-full flex absolute bottom-0 justify-between ${
+					isQuickBuyHovered
+						? 'group-hover:flex'
+						: 'group-hover:hidden'
+				} animate-slide-up text-left`}
+			>
 				<div className='shrink'>
 					<h6 className='text-lg leading-tight tracking-tight font-bold font-display'>
 						{product.name}
@@ -96,7 +107,11 @@ const ProductCardComponent = ({ product }: Props) => {
 					)}
 				</div>
 			</div>
-			<div className='hidden group-hover:flex group-hover:absolute top-4 bottom-4 flex-col justify-between left-4 animate-slide-up'>
+			<div
+				className={`hidden pointer-events-none group-hover:flex group-hover:absolute top-4 bottom-4 flex-col justify-between ${
+					isQuickBuyHovered ? 'pb-16' : ''
+				} left-4 animate-slide-up transition-all duration-1000 ease-in-out-expo`}
+			>
 				{sizes && (
 					<div
 						id='sizes'
@@ -108,9 +123,9 @@ const ProductCardComponent = ({ product }: Props) => {
 								variant='secondary'
 								key={index}
 								onClick={() => setSelectedSize(size)}
-								className={`font-display ${
+								className={`font-display bg-slate-200 pointer-events-auto hover:scale-105 ${
 									size === selectedSize
-										? 'p-1 border border-slate-700'
+										? 'p-1 bg-slate-50'
 										: 'p-1'
 								}`}
 							>
@@ -128,10 +143,10 @@ const ProductCardComponent = ({ product }: Props) => {
 								onClick={() => setSelectedColor(color)}
 								key={index}
 								style={{ backgroundColor: color.value }}
-								className={`w-4 h-4 ${
+								className={`aspect-square w-4 relative pointer-events-auto hover:scale-105  ${
 									color.name === selectedColor?.name
-										? 'p-1 border border-slate-700'
-										: 'p-1'
+										? 'border border-slate-700 rounded-full'
+										: ''
 								}`}
 							/>
 						))}
@@ -139,6 +154,8 @@ const ProductCardComponent = ({ product }: Props) => {
 				)}
 			</div>
 			<Button
+				onMouseEnter={() => setIsQuickBuyHovered(true)}
+				onMouseLeave={() => setIsQuickBuyHovered(false)}
 				onClick={() =>
 					handleQuickBuy(
 						product,
@@ -149,10 +166,16 @@ const ProductCardComponent = ({ product }: Props) => {
 				id='quickbuy'
 				className={`${
 					product.discount ? 'block' : 'hidden'
-				} group-hover:block absolute top-4 right-1/2 py-2 px-4 font-display font-bold text-sm bg-orange-600 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform] duration-[1300ms] ease-in-out-expo translate-x-1/2 `}
+				} group-hover:flex absolute top-4 right-1/2 py-2 px-4 font-display font-bold text-sm hover:scale-105 bg-orange-600 hover:bg-orange-500 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform_width] duration-[1300ms] ease-in-out-expo translate-x-1/2`}
 			>
 				{product.discount && (
-					<p className='group-hover:hidden block animate-slide-up'>
+					<p
+						className={` animate-slide-up ${
+							isQuickBuyHovered
+								? 'group-hover:block pl-2'
+								: 'group-hover:hidden'
+						} block `}
+					>
 						{product.discount}% OFF
 					</p>
 				)}

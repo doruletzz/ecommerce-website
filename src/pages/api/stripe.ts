@@ -36,13 +36,11 @@ export default async function handler(
 					};
 
 					const price = getPrice();
-					console.log(await price, cartItem.variant);
 
 					return {
 						quantity: cartItem.quantity,
 						price_data: {
-							unit_amount:
-								(await price) * cartItem.quantity * 100,
+							unit_amount: (await price) * 100,
 							currency: 'usd',
 							product_data: {
 								name: cartItem.product.name,

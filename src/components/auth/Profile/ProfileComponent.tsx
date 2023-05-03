@@ -4,10 +4,6 @@ import React, { useEffect } from 'react';
 const ProfileComponent = () => {
 	const user = useUser();
 
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
-
 	return (
 		<div>
 			<h3>My Account:</h3>

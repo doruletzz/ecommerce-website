@@ -5,21 +5,26 @@ import { client } from '../lib/sanityClient';
 import { GetServerSideProps } from 'next';
 import { Carousel, HeroBanner } from '@/components/layout';
 import { ProductCard } from '@/components/product';
+import product from '../../sanity-ecommerce/schemas/product';
+import { Collection } from '@/types/Collection';
 
 type Props = {
-	products: Array<Product>;
+	bestSellingCollection: Collection;
 	banner: Banner;
 };
 
-const HomePage = ({ products, banner }: Props) => {
+const HomePage = ({ bestSellingCollection, banner }: Props) => {
 	return (
 		<>
 			<div className='mx-32'>
-				<HeroBanner banner={banner} product={products[0]} />
+				<HeroBanner
+					banner={banner}
+					product={bestSellingCollection?.products[0]}
+				/>
 				<Carousel
 					pageSize='4'
-					title='Best Selling Products'
-					items={products.map((product) => (
+					title={bestSellingCollection.name}
+					items={bestSellingCollection.products.map((product) => (
 						<ProductCard key={product._id} product={product} />
 					))}
 				/>
@@ -34,19 +39,20 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		'public, s-maxage=10, stale-while-revalidate=59'
 	);
 
-	const productsQuery =
-		'*[_type == "product"]{_id, name, image, slug, price, discount, colors, category->{name}, variants[]->{code, color, size}}';
-	const products = await client.fetch<Product[]>(productsQuery);
+	const bestSellingProductsQuery =
+		'*[_type == "collection" && slug.current == "best-selling"]{name, products[]->{_id, name, image, slug, price, discount, colors, category->{name}, variants[]->{code, color, size}}}[0]';
 
-	console.log(products);
+	const bestSelling = await client.fetch<Collection>(
+		bestSellingProductsQuery
+	);
 
-	const bannersQuery = '*[_type == "banner"]';
-	const banners = await client.fetch<Banner[]>(bannersQuery);
+	const bannerQuery = '*[_type == "banner"][0]';
+	const banner = await client.fetch<Banner>(bannerQuery);
 
 	return {
 		props: {
-			products,
-			banner: banners[0],
+			bestSellingCollection: bestSelling,
+			banner: banner,
 		},
 	};
 };
