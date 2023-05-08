@@ -16,12 +16,12 @@ const ModalComponent = ({
 			{backdrop && (
 				<div
 					onClick={onBackdropClick}
-					className='fixed bg-black opacity-30 inset-0 cursor-pointer overscroll-none'
+					className='fixed bg-black w-screen h-screen opacity-30 inset-0 cursor-pointer overscroll-none'
 				/>
 			)}
 			<div
 				id='modal'
-				className='absolute p-4 bg-slate-400 rounded min-h-128 animate-slide-up'
+				className='fixed p-4 bg-slate-100 border border-slate-900 rounded min-h-128 animate-slide-up-and-fade-in'
 			>
 				{children}
 			</div>

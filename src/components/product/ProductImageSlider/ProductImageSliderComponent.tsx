@@ -9,14 +9,21 @@ import { useNextImage } from '../../../lib/sanityClient';
 import Image from 'next/image';
 
 type Props = {
+	noLink?: boolean;
 	product: Product;
 	className?: string;
 };
 
-const ProductImageSliderComponent = ({ product, className }: Props) => {
+const ProductImageSliderComponent = ({
+	product,
+	noLink = false,
+	className,
+}: Props) => {
 	const [imgIndex, setImgIndex] = useState(0);
 	const imgProps = useNextImage(product.image[imgIndex]);
 	const [direction, setDirection] = useState<'left' | 'right'>();
+
+	const OverridenLinkComponent = noLink ? 'div' : Link;
 
 	return (
 		<div
@@ -24,7 +31,10 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				className ?? ''
 			}`}
 		>
-			<Link href={`/product/${product.slug.current}`}>
+			<OverridenLinkComponent
+				href={noLink ? '' : `/product/${product.slug.current}`}
+				className='h-full'
+			>
 				<div className='w-full h-full object-cover rounded-xl relative border-slate-700 border overflow-hidden'>
 					<Image
 						key={`previous ${imgIndex}`}
@@ -74,12 +84,12 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 						}`}
 					/>
 				</div>
-			</Link>
+			</OverridenLinkComponent>
 			<div className='hidden pointer-events-none group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full justify-between'>
 				<Button
 					variant='secondary'
 					id='left-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors  animate-slide-up p-3 ${
+					className={`m-3 max-w-8 w-1/6 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors  animate-slide-up-and-fade-in p-3 ${
 						imgIndex === 0 ? 'text-opacity-50' : 'text-opacity-100'
 					}`}
 					onClick={() => {
@@ -92,7 +102,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				<Button
 					variant='secondary'
 					id='right-arrow'
-					className={`m-3 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors p-3 animate-slide-up ${
+					className={`m-3 max-w-8 w-1/6 pointer-events-auto text-slate-600 hover:text-slate-800 hover:scale-105 hover:bg-slate-200 transition-colors p-3 animate-slide-up-and-fade-in ${
 						imgIndex === product.image.length - 1
 							? 'text-opacity-50'
 							: 'text-opacity-100'
@@ -111,7 +121,7 @@ const ProductImageSliderComponent = ({ product, className }: Props) => {
 				{product.image?.map((_, i) => (
 					<li
 						key={i}
-						className={`w-1 h-1 rounded-full  animate-slide-up ${
+						className={`w-1 h-1 rounded-full  animate-slide-up-and-fade-in ${
 							i === imgIndex ? 'bg-slate-700' : 'bg-slate-400'
 						}`}
 					/>

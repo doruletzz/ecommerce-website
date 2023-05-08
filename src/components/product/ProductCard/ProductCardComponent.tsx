@@ -70,7 +70,7 @@ const ProductCardComponent = ({ product }: Props) => {
 	}, [product, product.variants]);
 
 	return (
-		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up'>
+		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up-and-fade-in'>
 			<div
 				className={`pb-16 group-hover:pb-0 h-full  transition-all duration-[1300ms] ease-in-out-expo  ${
 					isQuickBuyHovered ? 'group-hover:pb-16' : ''
@@ -83,7 +83,7 @@ const ProductCardComponent = ({ product }: Props) => {
 					isQuickBuyHovered
 						? 'group-hover:flex'
 						: 'group-hover:hidden'
-				} animate-slide-up text-left`}
+				} animate-slide-up-and-fade-in text-left`}
 			>
 				<div className='shrink'>
 					<h6 className='text-lg leading-tight tracking-tight font-bold font-display'>
@@ -110,7 +110,7 @@ const ProductCardComponent = ({ product }: Props) => {
 			<div
 				className={`hidden pointer-events-none group-hover:flex group-hover:absolute top-4 bottom-4 flex-col justify-between ${
 					isQuickBuyHovered ? 'pb-16' : ''
-				} left-4 animate-slide-up transition-all duration-1000 ease-in-out-expo`}
+				} left-4 animate-slide-up-and-fade-in transition-all duration-1000 ease-in-out-expo`}
 			>
 				{sizes && (
 					<div
@@ -170,7 +170,7 @@ const ProductCardComponent = ({ product }: Props) => {
 			>
 				{product.discount && (
 					<p
-						className={` animate-slide-up ${
+						className={` animate-slide-up-and-fade-in ${
 							isQuickBuyHovered
 								? 'group-hover:block pl-2'
 								: 'group-hover:hidden'
@@ -181,7 +181,7 @@ const ProductCardComponent = ({ product }: Props) => {
 				)}
 				<div
 					id='cart'
-					className='group-hover:block w-7 hidden animate-slide-up'
+					className='group-hover:block w-7 hidden animate-slide-up-and-fade-in'
 				>
 					<FontAwesomeIcon icon={faCartShopping} />
 				</div>

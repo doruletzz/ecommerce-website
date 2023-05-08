@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => {
 	return (
-		<div>
+		<div className='w-full text-center'>
 			<p>2023 KeyCaps All Rights Reserved</p>
 		</div>
 	);

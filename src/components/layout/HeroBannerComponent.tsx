@@ -28,7 +28,7 @@ const HeroBanner = ({ banner, product }: Props) => {
 					<Image
 						width={imgProps.width}
 						height={imgProps.height}
-						className='absolute inset-0 -z-50 opacity-70'
+						className='absolute inset-0 -z-0 opacity-70 pointer-events-none'
 						src={imgProps.src}
 						loader={imgProps.loader}
 						alt='keyboard'
@@ -47,7 +47,7 @@ const HeroBanner = ({ banner, product }: Props) => {
 							id='cta-button'
 							type='button'
 							variant='primary'
-							className='py-3 px-5 text-lg uppercase'
+							className='py-2 px-4 uppercase'
 						>
 							{banner.primaryButtonText}{' '}
 							<FontAwesomeIcon icon={faArrowRight} />
@@ -55,6 +55,7 @@ const HeroBanner = ({ banner, product }: Props) => {
 					</Link>
 					{product && (
 						<div className='w-128 mx-auto mt-32 delay-700'>
+							<h4 className='text-left'>BUY NOW:</h4>
 							<ProductCard product={product} />
 						</div>
 					)}

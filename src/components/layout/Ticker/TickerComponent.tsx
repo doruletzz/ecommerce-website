@@ -1,10 +1,20 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/input';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {
+	MouseEventHandler,
+	ReactNode,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 type Props = {
 	children: ReactNode;
+	onClose?: MouseEventHandler;
 };
 
-const TickerComponent = ({ children }: Props) => {
+const TickerComponent = ({ children, onClose }: Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const elementRef = useRef<HTMLDivElement>(null);
 
@@ -35,19 +45,26 @@ const TickerComponent = ({ children }: Props) => {
 	}, [containerRef.current, totalWidth]);
 
 	return (
-		<div
-			ref={containerRef}
-			className='animate-inifinte-scroll flex font-display tracking-tighter'
-		>
-			<div className='whitespace-nowrap p-1' ref={elementRef}>
-				{children}
+		<div className='flex'>
+			<div
+				ref={containerRef}
+				className='animate-inifinte-scroll flex font-display tracking-tighter flex-1'
+			>
+				<div className='whitespace-nowrap p-1' ref={elementRef}>
+					{children}
+				</div>
+				{toRepeatCount > 0 &&
+					[...Array(toRepeatCount)].map((_, index) => (
+						<div key={index} className='whitespace-nowrap p-1'>
+							{children}
+						</div>
+					))}
 			</div>
-			{toRepeatCount > 0 &&
-				[...Array(toRepeatCount)].map((_, index) => (
-					<div key={index} className='whitespace-nowrap p-1'>
-						{children}
-					</div>
-				))}
+			{onClose && (
+				<Button id='close' variant='text' onClick={onClose}>
+					<FontAwesomeIcon icon={faClose} />
+				</Button>
+			)}
 		</div>
 	);
 };

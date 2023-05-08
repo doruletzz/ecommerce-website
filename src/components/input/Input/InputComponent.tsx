@@ -16,7 +16,8 @@ type Props<T> = {
 	ref?: Ref<HTMLInputElement>;
 };
 
-const InputComponent = <T extends string>({
+const InputComponent = <T extends string | number>({
+	id,
 	value,
 	type = 'text',
 	className,
@@ -26,6 +27,7 @@ const InputComponent = <T extends string>({
 }: Props<T>) => {
 	return (
 		<input
+			id={id}
 			className={className}
 			ref={ref}
 			type={type}

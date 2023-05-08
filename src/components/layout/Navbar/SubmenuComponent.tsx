@@ -1,15 +1,25 @@
 import { client } from '@/lib/sanityClient';
 import { Slug } from '@/types/Slug';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useRef, useState } from 'react';
 
 type Props = {
 	categoryId: string;
+	categorySlug: string;
+	anchor: number;
+	onMouseEnter?: MouseEventHandler;
+	onMouseLeave?: MouseEventHandler;
 };
 
 type SubmenuCollections = Array<{ name: string; slug: Slug }>;
 
-const SubmenuComponent = ({ categoryId }: Props) => {
+const SubmenuComponent = ({
+	categoryId,
+	categorySlug,
+	anchor,
+	onMouseEnter,
+	onMouseLeave,
+}: Props) => {
 	const [collections, setCollections] = useState<SubmenuCollections>();
 
 	useEffect(() => {
@@ -24,16 +34,27 @@ const SubmenuComponent = ({ categoryId }: Props) => {
 	}, [categoryId]);
 
 	return (
-		<div>
-			<ul>
-				{collections?.map((collection) => (
-					<li key={collection.slug.current}>
-						<Link href={collection.slug.current}>
-							{collection.name}
-						</Link>
-					</li>
-				))}
-			</ul>
+		<div
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			style={{
+				left: anchor,
+			}}
+			className='absolute -translate-x-1/2 top-full transition-[left/height] duration-700 ease-in-out-expo'
+		>
+			<div className='animate-slide-up-and-fade-in mt-1 p-4 bg-slate-100 border border-slate-700 rounded'>
+				<ul>
+					{collections?.map((collection) => (
+						<li key={collection.slug.current}>
+							<Link
+								href={`/store/${categorySlug}/${collection.slug.current}`}
+							>
+								{collection.name}
+							</Link>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };

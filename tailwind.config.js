@@ -15,15 +15,22 @@ module.exports = {
           '0%': { transform: 'translateX(var(--infinite-scroll-total-width))'},
           '100%': { transform: 'translateX(0)'},
         },
-        'slideUp': {
+        "fadeIn": {
           '0%': {
+            visibility: 'visible',
             opacity: '0', 
-            transform: 'translateY(1rem)'},
+          },
           '66': {
             opacity: '100%', 
           },
           '100%': {
             opacity: '100%', 
+          },
+        },
+        'slideUp': {
+          '0%': {
+            transform: 'translateY(1rem)'},
+          '100%': {
             transform: 'translateY(0)'
           },
         },
@@ -59,7 +66,12 @@ module.exports = {
       animation: {
         'inifinte-scroll': 'infiniteScroll 40s linear infinite',
         'slide-up': 'slideUp 1.3s cubic-bezier(.88,-0.01,.12,1)',
+        'slide-up-and-fade-in': 'slideUp 1.3s cubic-bezier(.88,-0.01,.12,1), fadeIn 1.3s cubic-bezier(.88,-0.01,.12,1) forwards',
+        'slide-right-and-fade-in': 'slideRight 1.3s cubic-bezier(.88,-0.01,.12,1), fadeIn 1.3s cubic-bezier(.88,-0.01,.12,1) forwards',
+        'slide-left-and-fade-in': 'slideLeft 1.3s cubic-bezier(.88,-0.01,.12,1), fadeIn 1.3s cubic-bezier(.88,-0.01,.12,1) forwards',
+        'fade-in': 'fadeIn 1.3s cubic-bezier(.88,-0.01,.12,1)',
         'slide-right': 'slideRight 1.3s cubic-bezier(.88,-0.01,.12,1)',
+        'spin-expo': 'spin 1.3s cubic-bezier(.88,-0.01,.12,1) infinite',
         'slide-left': 'slideLeft 1.3s cubic-bezier(.88,-0.01,.12,1)'
       },
     },

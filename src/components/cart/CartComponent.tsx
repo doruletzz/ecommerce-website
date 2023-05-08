@@ -1,35 +1,59 @@
 import { useAppSelector } from '@/features/app/hooks';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import CartItem from './CartItemComponent';
 import Link from 'next/link';
+import { Button } from '../input';
+import EmptyCartComponent from './EmptyCartComponent';
 
 type Props = {
 	isModal?: boolean;
+	onClose?: MouseEventHandler;
 };
 
-const Cart = ({ isModal = false }: Props) => {
+const Cart = ({ isModal = false, onClose }: Props) => {
 	const { items, totalQuantity } = useAppSelector((state) => state.cart);
 
+	if (totalQuantity === 0) return <EmptyCartComponent />;
+
 	return (
-		<div className='h-full flex flex-col overflow-hidden gap-4'>
-			<div>
-				<h6>Cart</h6>
-			</div>
-			<div id='products' className='overflow-auto flex-0'>
+		<div className='h-full flex flex-col overflow-hidden gap-4 items-baseline w-256 p-4'>
+			<h6 className='text-sm text-slate-600 font-bold'>Your Cart</h6>
+			<div className='w-full h-[1px] bg-slate-700' />
+
+			<div
+				id='products'
+				className='overflow-auto flex-0 max-h-128 w-full flex flex-col gap-2'
+			>
 				{items?.map((item, index) => (
 					<CartItem
 						key={index}
 						variant={item.variant}
 						product={item.product}
 						quantity={item.quantity}
+						onProductClick={onClose}
 					/>
 				))}
 			</div>
 			<div id='total'></div>
-			<Link id='checkout' href='/checkout'>
-				Proceed to checkout {totalQuantity ? `(${totalQuantity})` : ''}
+			<div className='w-full h-[1px] bg-slate-700' />
+			<Link id='checkout' href='/checkout' className='w-full'>
+				<Button id='checkout' className='w-full h-8' onClick={onClose}>
+					Proceed to checkout{' '}
+					{totalQuantity ? `(${totalQuantity})` : ''}
+				</Button>
 			</Link>
-			{isModal && <div id='checkout'>View Cart</div>}
+			{isModal && (
+				<Link id='checkout' href='/checkout' className='w-full'>
+					<Button
+						id='checkout'
+						variant='secondary'
+						className='w-full h-8'
+						onClick={onClose}
+					>
+						View Cart
+					</Button>
+				</Link>
+			)}
 		</div>
 	);
 };

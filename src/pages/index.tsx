@@ -9,13 +9,18 @@ import { Collection } from '@/types/Collection';
 
 type Props = {
 	bestSellingCollection: Collection;
+	trendingCollection: Collection;
 	banner: Banner;
 };
 
-const HomePage = ({ bestSellingCollection, banner }: Props) => {
+const HomePage = ({
+	bestSellingCollection,
+	trendingCollection,
+	banner,
+}: Props) => {
 	return (
 		<>
-			<div className='mx-32'>
+			<div className='px-32 relative'>
 				<HeroBanner
 					banner={banner}
 					product={bestSellingCollection?.products[0]}
@@ -24,6 +29,13 @@ const HomePage = ({ bestSellingCollection, banner }: Props) => {
 					pageSize='4'
 					title={bestSellingCollection.name}
 					items={bestSellingCollection.products.map((product) => (
+						<ProductCard key={product._id} product={product} />
+					))}
+				/>
+				<Carousel
+					pageSize='3'
+					title={trendingCollection.name}
+					items={trendingCollection.products.map((product) => (
 						<ProductCard key={product._id} product={product} />
 					))}
 				/>
@@ -40,16 +52,20 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 	const bestSellingProductsQuery =
 		'*[_type == "collection" && slug.current == "best-selling"]{name, products[]->{_id, name, image, slug, price, discount, colors, category->{name}, variants[]->{code, color, size}}}[0]';
-
 	const bestSelling = await client.fetch<Collection>(
 		bestSellingProductsQuery
 	);
+
+	const trendingProductsQuery =
+		'*[_type == "collection" && slug.current == "trending"]{name, products[]->{_id, name, image, slug, price, discount, colors, category->{name}, variants[]->{code, color, size}}}[0]';
+	const trending = await client.fetch<Collection>(trendingProductsQuery);
 
 	const bannerQuery = '*[_type == "banner"][0]';
 	const banner = await client.fetch<Banner>(bannerQuery);
 
 	return {
 		props: {
+			trendingCollection: trending,
 			bestSellingCollection: bestSelling,
 			banner: banner,
 		},

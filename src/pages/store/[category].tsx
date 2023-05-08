@@ -1,4 +1,3 @@
-import { Grid } from '@/components/layout';
 import { ProductCard } from '@/components/product';
 import { client } from '@/lib/sanityClient';
 import { Category } from '@/types/Category';
@@ -15,7 +14,7 @@ const Products = ({ products }: Props) => {
 	return (
 		<div>
 			{products && (
-				<Grid>
+				<div className='grid grid-cols-6 gap-4'>
 					{products?.map(
 						(product) =>
 							product && (
@@ -25,7 +24,7 @@ const Products = ({ products }: Props) => {
 								/>
 							)
 					)}
-				</Grid>
+				</div>
 			)}
 		</div>
 	);
@@ -51,8 +50,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths = async () => {
 	const query = `*[_type == "category"]`;
-
 	const categories = await client.fetch<Category[]>(query);
+
 	return {
 		paths: categories.map((category) => ({
 			params: { category: category.slug.current },

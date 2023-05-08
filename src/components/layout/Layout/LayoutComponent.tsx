@@ -9,15 +9,15 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
 	return (
-		<div>
+		<div className='min-h-screen flex flex-col bg-slate-100'>
 			<Head>
 				<title>KeyCaps</title>
 			</Head>
-			<header className='sticky top-0 z-20'>
+			<header className='sticky top-0 bottom-0 z-50'>
 				<Navbar />
 			</header>
-			<main>{children}</main>
-			<footer>
+			<main className='bg-slate-100'>{children}</main>
+			<footer className='flex-1 items-end flex bg-slate-100'>
 				<Footer />
 			</footer>
 		</div>
