@@ -5,6 +5,7 @@ type Props<T> = {
 	id: string;
 	type?: string;
 	label?: string;
+	checked?: boolean;
 	value: T;
 	startAdornment?: ReactNode;
 	endAdornment?: ReactNode;
@@ -21,6 +22,7 @@ const CheckboxFieldComponent = <T extends string | number>(props: Props<T>) => {
 		type,
 		value,
 		label,
+		checked,
 		error,
 		startAdornment,
 		onBlur,
@@ -42,6 +44,7 @@ const CheckboxFieldComponent = <T extends string | number>(props: Props<T>) => {
 				<Input
 					id={id}
 					value={value}
+					checked={checked}
 					type={type}
 					onChange={onChange}
 					onBlur={onBlur}

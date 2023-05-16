@@ -6,6 +6,7 @@ type Props<T> = {
 	type?: string;
 	label?: string;
 	value: T;
+	checked?: boolean;
 	startAdornment?: ReactNode;
 	endAdornment?: ReactNode;
 	onChange?: ChangeEventHandler;
@@ -21,6 +22,7 @@ const RadioFieldComponent = <T extends string | number>(props: Props<T>) => {
 		type,
 		value,
 		label,
+		checked,
 		error,
 		startAdornment,
 		onBlur,
@@ -42,6 +44,7 @@ const RadioFieldComponent = <T extends string | number>(props: Props<T>) => {
 				<Input
 					id={id}
 					value={value}
+					checked={checked}
 					type={type}
 					onChange={onChange}
 					onBlur={onBlur}

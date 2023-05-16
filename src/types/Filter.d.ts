@@ -1,11 +1,13 @@
 import { Color } from './Product';
 
 export type Filter = {
-	sort?: 'ascending' | 'descending' | 'newest' | 'oldest';
+	sort?: Sort[];
 	sizes?: FilterSize[];
 	colors?: FilterColor[];
 	brands?: string[];
 };
+
+export type Sort = 'ascending' | 'descending' | 'newest' | 'oldest';
 
 export type FilterColor = {
 	value: Color;

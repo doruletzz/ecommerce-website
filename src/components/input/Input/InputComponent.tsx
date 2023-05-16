@@ -11,6 +11,7 @@ type Props<T> = {
 	type?: string;
 	disabled?: boolean;
 	value: T;
+	checked?: boolean;
 	className?: string;
 	onChange?: ChangeEventHandler;
 	onBlur?: ChangeEventHandler;
@@ -22,6 +23,7 @@ const InputComponent = <T extends string | number>({
 	value,
 	type = 'text',
 	disabled = false,
+	checked,
 	className,
 	onChange,
 	onBlur,
@@ -34,6 +36,7 @@ const InputComponent = <T extends string | number>({
 			disabled={disabled}
 			ref={ref}
 			type={type}
+			checked={checked ?? false}
 			defaultValue={value}
 			onChange={onChange}
 			onBlur={onBlur}

@@ -1,15 +1,50 @@
 import { Button, Field } from '@/components/input';
 import { Br } from '@/components/layout';
 import AccordionComponent from '@/components/layout/Accordion/AccordionComponent';
-import { Filter } from '@/types/Filter';
-import React from 'react';
+import { Filter, FilterColor, FilterSize, Sort } from '@/types/Filter';
+import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+
+type Flatten<T> = T extends any[] ? T[number] : T;
 
 type Props = {
 	filter: Filter;
+	selected?: Filter;
+	setSelected: Dispatch<SetStateAction<Filter | undefined>>;
 };
 
-const SideBarComponent = ({ filter }: Props) => {
-	const sortByValues = ['ascending', 'descending', 'oldest', 'newest'];
+const SideBarComponent = ({ filter, selected, setSelected }: Props) => {
+	const changeSelected = (
+		selected: Filter,
+		value: Flatten<Filter[keyof Filter]>,
+		field: keyof Filter,
+		equalFn: (
+			v1: Flatten<Filter[keyof Filter]>,
+			v2: Flatten<Filter[keyof Filter]>
+		) => boolean
+	) => {
+		let newSelected = { ...selected };
+		const selectedIndex =
+			selected[field]?.findIndex((f: Flatten<Filter[keyof Filter]>) => {
+				console.log(f, value, equalFn(f, value));
+				return equalFn(f, value);
+			}) ?? -1;
+
+		if (selectedIndex === -1)
+			newSelected = {
+				...selected,
+				[field]: [...(selected[field] ?? []), value],
+			};
+		else newSelected[field]?.splice(selectedIndex, 1);
+
+		return newSelected;
+	};
+
+	const sortByValues: Sort[] = [
+		'ascending',
+		'descending',
+		'oldest',
+		'newest',
+	];
 
 	return (
 		<div className='row-span-2 row-start-1'>
@@ -22,7 +57,27 @@ const SideBarComponent = ({ filter }: Props) => {
 								id={color.value.name}
 								disabled={color.disabled}
 								label={color.value.name}
-								value={0}
+								value={color.value.name}
+								checked={
+									!!selected?.colors?.find(
+										(selectedColors) =>
+											color.value === selectedColors.value
+									)
+								}
+								onChange={() =>
+									selected &&
+									setSelected(
+										changeSelected(
+											selected,
+											color,
+											'colors',
+											(v1, v2) =>
+												(v1 as FilterColor).value
+													.name ===
+												(v2 as FilterColor).value.name
+										)
+									)
+								}
 							/>
 						</li>
 					))}
@@ -39,6 +94,25 @@ const SideBarComponent = ({ filter }: Props) => {
 								disabled={size.disabled}
 								label={size.value}
 								value={0}
+								checked={
+									!!selected?.sizes?.find(
+										(selectedSize) =>
+											size.value === selectedSize.value
+									)
+								}
+								onChange={() =>
+									selected &&
+									setSelected(
+										changeSelected(
+											selected,
+											size,
+											'sizes',
+											(v1, v2) =>
+												(v1 as FilterSize).value ===
+												(v2 as FilterSize).value
+										)
+									)
+								}
 							/>
 						</li>
 					))}
@@ -54,6 +128,18 @@ const SideBarComponent = ({ filter }: Props) => {
 								id={brand}
 								label={brand}
 								value={0}
+								checked={!!selected?.brands?.includes(brand)}
+								onChange={() =>
+									selected &&
+									setSelected(
+										changeSelected(
+											selected,
+											brand,
+											'brands',
+											(v1, v2) => v1 === v2
+										)
+									)
+								}
 							/>
 						</li>
 					))}
@@ -68,7 +154,15 @@ const SideBarComponent = ({ filter }: Props) => {
 								type='radio'
 								id={sortType}
 								label={sortType}
-								value={+!!(sortType === filter.sort)}
+								checked={selected?.sort?.includes(sortType)}
+								value={sortType}
+								onChange={(e) =>
+									selected &&
+									setSelected((prev) => ({
+										...prev,
+										sort: [sortType],
+									}))
+								}
 							/>
 						</li>
 					))}

@@ -6,10 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { error } from 'console';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { MouseEvent, useEffect, useState } from 'react';
 
 const RegisterComponent = () => {
 	const supabaseClient = useSupabaseClient();
+	const router = useRouter();
 
 	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
@@ -85,6 +87,7 @@ const RegisterComponent = () => {
 				})
 				.then((res) => {
 					if (res.error) setError(res.error?.message);
+					else router.push('/login');
 				})
 				.catch((err) => console.error(err));
 	};

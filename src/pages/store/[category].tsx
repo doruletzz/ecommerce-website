@@ -95,8 +95,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		sizes,
 	};
 
-	console.log(title);
-
 	return {
 		props: {
 			products: productsByCategory,

@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, ReactNode } from 'react';
+import React, { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { Input } from '../';
 import CheckboxFieldComponent from './CheckboxFieldComponent';
 import TextFieldComponent from './TextFieldComponent';
@@ -8,11 +8,13 @@ type Props<T> = {
 	id: string;
 	type?: 'text' | 'checkbox' | 'password' | 'radio';
 	label?: string;
+	checked?: boolean;
 	value: T;
 	className?: string;
 	startAdornment?: ReactNode;
 	endAdornment?: ReactNode;
 	onChange?: ChangeEventHandler;
+	onClick?: MouseEventHandler;
 	onBlur?: ChangeEventHandler;
 	error?: string;
 	disabled?: boolean;
