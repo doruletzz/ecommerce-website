@@ -21,7 +21,7 @@ const Products = ({ products, filter, title }: Props) => {
 			<h4 className='col-start-2 text-2xl font-display font-bold text-slate-700'>
 				{title}
 			</h4>
-			{products.length > 0 ? (
+			{products?.length > 0 ? (
 				<ProductStore filter={filter} products={products} />
 			) : (
 				<EmptyCollection />

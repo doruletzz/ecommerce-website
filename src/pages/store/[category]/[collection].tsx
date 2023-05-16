@@ -16,15 +16,9 @@ const Collection = ({ products }: Props) => {
 		<div>
 			{products && (
 				<div className='grid grid-cols-6 gap-4'>
-					{products?.map(
-						(product) =>
-							product && (
-								<ProductCard
-									key={product?._id}
-									product={product}
-								/>
-							)
-					)}
+					{products?.map((product) => (
+						<ProductCard key={product?._id} product={product} />
+					))}
 				</div>
 			)}
 		</div>
