@@ -20,7 +20,7 @@ const HomePage = ({
 }: Props) => {
 	return (
 		<>
-			<div className='px-32 relative'>
+			<div className='px-32 relative flex flex-col gap-12'>
 				<HeroBanner
 					banner={banner}
 					product={bestSellingCollection?.products[0]}

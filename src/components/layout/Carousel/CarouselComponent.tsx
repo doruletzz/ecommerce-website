@@ -52,15 +52,17 @@ const CarouselComponent = <T extends ReactNode>({
 			className='grid grid-cols-[16px_minmax(0,_4fr)_16px] gap-4 items-center justify-between'
 		>
 			{title && (
-				<h2 className='text-4xl tracking-tighter text-blue-800 font-bold col-span-2 font-display'>
+				<h2 className='text-4xl tracking-tighter text-slate-700 font-bold col-span-2 font-display'>
 					{title}
 				</h2>
 			)}
 			<Button
 				id='slide-left'
-				className={`${title ? 'col-start-3' : 'col-start-1'} w-full`}
+				className={`${
+					title ? 'col-start-3' : 'col-start-1'
+				} w-full hover:scale-105`}
 				onClick={() => slideLeft()}
-				variant='secondary'
+				variant='text'
 			>
 				<FontAwesomeIcon icon={faArrowLeft} />
 			</Button>
@@ -84,9 +86,9 @@ const CarouselComponent = <T extends ReactNode>({
 			</div>
 
 			<Button
-				variant='secondary'
+				variant='text'
 				id='slide-right'
-				className='row-start-1 col-start-4 w-full'
+				className='row-start-1 col-start-4 w-full hover:scale-105'
 				onClick={() => slideRight()}
 			>
 				<FontAwesomeIcon icon={faArrowRight} />

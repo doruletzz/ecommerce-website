@@ -31,9 +31,7 @@ const CartItemComponent = ({
 					href={'/product/' + product.slug.current}
 					onClick={onProductClick}
 				>
-					<h4 className='font-display font-bold text-lg'>
-						{product.name}
-					</h4>
+					<h4 className='font-bold text-lg'>{product.name}</h4>
 				</Link>
 				<div className='text-slate-700 text-sm'>
 					{variant && variant.color && (

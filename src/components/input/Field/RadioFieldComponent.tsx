@@ -15,7 +15,7 @@ type Props<T> = {
 	required?: boolean;
 };
 
-const CheckboxFieldComponent = <T extends string | number>(props: Props<T>) => {
+const RadioFieldComponent = <T extends string | number>(props: Props<T>) => {
 	const {
 		id,
 		type,
@@ -55,4 +55,4 @@ const CheckboxFieldComponent = <T extends string | number>(props: Props<T>) => {
 	);
 };
 
-export default CheckboxFieldComponent;
+export default RadioFieldComponent;

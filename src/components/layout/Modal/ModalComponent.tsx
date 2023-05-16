@@ -16,7 +16,7 @@ const ModalComponent = ({
 			{backdrop && (
 				<div
 					onClick={onBackdropClick}
-					className='fixed bg-black w-screen h-screen opacity-30 inset-0 cursor-pointer overscroll-none'
+					className='fixed bg-black w-screen h-screen opacity-40 inset-0 cursor-pointer transition-opacity duration-700 overscroll-none'
 				/>
 			)}
 			<div

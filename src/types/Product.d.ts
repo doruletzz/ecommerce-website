@@ -1,11 +1,11 @@
 import { Category } from './Category';
 import { Slug } from './Slug';
 
-type Color = {
+interface Color {
 	_key: string;
 	name: string;
 	value: string;
-};
+}
 
 type Variant = {
 	name: string;
@@ -20,6 +20,7 @@ type Variant = {
 
 export type Product = {
 	_id: string;
+	brand?: string;
 	category: Category;
 	name: string;
 	image: Array<string>;
@@ -27,5 +28,5 @@ export type Product = {
 	price: number;
 	discount?: number;
 	details: string;
-	variants: Variant[];
+	variants: Variant[] | null;
 };

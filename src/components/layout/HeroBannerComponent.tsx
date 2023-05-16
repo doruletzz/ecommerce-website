@@ -21,18 +21,19 @@ type Props = {
 
 const HeroBanner = ({ banner, product }: Props) => {
 	const imgProps = useNextImage(banner.image);
+
 	return (
-		<>
+		<div>
+			<Image
+				width={imgProps.width}
+				height={imgProps.height}
+				className='absolute inset-0 z-0 opacity-70 pointer-events-none'
+				src={imgProps.src}
+				loader={imgProps.loader}
+				alt='keyboard'
+			/>
 			{banner && (
-				<div className='flex flex-col text-center mt-32 gap-4 max-w-7xl mx-auto min-h-screen'>
-					<Image
-						width={imgProps.width}
-						height={imgProps.height}
-						className='absolute inset-0 -z-0 opacity-70 pointer-events-none'
-						src={imgProps.src}
-						loader={imgProps.loader}
-						alt='keyboard'
-					/>
+				<div className='flex flex-col text-center pt-32 gap-4 max-w-7xl mx-auto min-h-screen relative'>
 					<h3 className='text-orange-600 text-sm mx-auto '>
 						{banner.midText}
 					</h3>
@@ -61,7 +62,7 @@ const HeroBanner = ({ banner, product }: Props) => {
 					)}
 				</div>
 			)}
-		</>
+		</div>
 	);
 };
 

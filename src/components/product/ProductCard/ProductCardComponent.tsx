@@ -70,9 +70,9 @@ const ProductCardComponent = ({ product }: Props) => {
 	}, [product, product.variants]);
 
 	return (
-		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up-and-fade-in'>
+		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up-and-fade-in active:scale-[99%] duration-100 ease-in-out-expo '>
 			<div
-				className={`pb-16 group-hover:pb-0 h-full  transition-all duration-[1300ms] ease-in-out-expo  ${
+				className={`pb-16 group-hover:pb-0 h-full  transition-all duration-[1300ms] ease-in-out-expo ${
 					isQuickBuyHovered ? 'group-hover:pb-16' : ''
 				}`}
 			>
@@ -86,7 +86,7 @@ const ProductCardComponent = ({ product }: Props) => {
 				} animate-slide-up-and-fade-in text-left`}
 			>
 				<div className='shrink'>
-					<h6 className='text-lg leading-tight tracking-tight font-bold font-display'>
+					<h6 className='text-lg leading-tight tracking-tight font-bold'>
 						{product.name}
 					</h6>
 					<p className='text-sm'>{product.category?.name}</p>
@@ -166,7 +166,7 @@ const ProductCardComponent = ({ product }: Props) => {
 				id='quickbuy'
 				className={`${
 					product.discount ? 'block' : 'hidden'
-				} group-hover:flex absolute top-4 right-1/2 py-2 px-4 font-display font-bold text-sm hover:scale-105 bg-orange-600 hover:bg-orange-500 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform_width] duration-[1300ms] ease-in-out-expo translate-x-1/2`}
+				} group-hover:flex absolute top-4 right-1/2 py-2 px-4 text-sm hover:scale-105 bg-orange-600 hover:bg-orange-500 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform_width] duration-[1300ms] ease-in-out-expo translate-x-1/2`}
 			>
 				{product.discount && (
 					<p

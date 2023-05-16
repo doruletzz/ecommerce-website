@@ -138,7 +138,9 @@ const ProductDetailsPage = ({ productDetails }: Props) => {
 						onClick={() =>
 							dispatch(
 								addCartItem({
-									variant: productDetails.variants[0],
+									variant: productDetails.variants
+										? productDetails.variants[0]
+										: null,
 									product: productDetails,
 									quantity: quantity,
 								})

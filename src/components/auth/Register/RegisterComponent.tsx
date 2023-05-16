@@ -1,5 +1,6 @@
-import { Button, Field, Spinner } from '@/components/input';
+import { Alert, Button, Field, Spinner } from '@/components/input';
 import { setError } from '@/features/cart/slice';
+import { useDebounce } from '@/hooks/useDebounce';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
@@ -17,21 +18,64 @@ const RegisterComponent = () => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const [emailError, setEmailError] = useState('');
-	const [lastNameError, setFirstNameError] = useState('');
-	const [firstNameError, setLastNameError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
+	const [firstNameError, setFirstNameError] = useState('');
+	const [lastNameError, setLastNameError] = useState('');
 	const [isFetching, setIsFetching] = useState(false);
 	const [error, setError] = useState('');
+
+	const debouncedEmail = useDebounce(email, 400);
+	const debouncedPassword = useDebounce(password, 400);
+	const debouncedFirstName = useDebounce(firstName, 400);
+	const debouncedLastName = useDebounce(lastName, 400);
+
+	const validateFirstName = (name: string): string | undefined => {
+		if (!/^[a-z ,.'-]+$/i.test(name)) return 'Invalid First Name';
+	};
+
+	const validateLastName = (name: string): string | undefined => {
+		if (!/^[a-z ,.'-]+$/i.test(name)) return 'Invalid Last Name';
+	};
 
 	const validateEmail = (email: string): string | undefined => {
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
 			return 'Invalid Email Address';
 	};
 
+	const validatePassword = (password: string): string | undefined => {
+		const passwordRegex =
+			/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+		if (!passwordRegex.test(password))
+			return 'Invalid password, password must contain atleast an uppercase letter, a lowercase letter, a number and a special character (!@#$%^&*)';
+	};
+
+	useEffect(() => {
+		if (!!debouncedEmail && debouncedEmail === email) {
+			setEmailError(validateEmail(debouncedEmail) ?? '');
+		}
+	}, [debouncedEmail]);
+
+	useEffect(() => {
+		if (!!debouncedPassword && debouncedPassword === password) {
+			setPasswordError(validatePassword(debouncedPassword) ?? '');
+		}
+	}, [debouncedPassword]);
+
+	useEffect(() => {
+		if (!!debouncedFirstName && debouncedFirstName === firstName) {
+			setFirstNameError(validateFirstName(debouncedFirstName) ?? '');
+		}
+	}, [debouncedFirstName]);
+
+	useEffect(() => {
+		if (!!debouncedLastName && debouncedLastName === lastName) {
+			setLastNameError(validateLastName(debouncedLastName) ?? '');
+		}
+	}, [debouncedLastName]);
+
 	const handleRegister = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-
-		const emailError = validateEmail(email);
-		setEmailError(email);
 
 		if (!emailError)
 			supabaseClient.auth
@@ -50,46 +94,46 @@ const RegisterComponent = () => {
 			<form className=' bg-slate-200 rounded p-12 flex flex-col justify-center gap-2 border border-slate-700'>
 				<h3 className='text-4xl font-display font-bold'>Sign up</h3>
 				<br />
-				{isFetching && <Spinner />}
-				<div>{error}</div>
+				{error && <Alert>{error}</Alert>}
 				<Field
-					required
 					id='firstName'
 					label='First Name'
+					className='bg-slate-200 autofill:!shadow-[inset_0_0_0px_1000px_rgb(226,232,240)]'
 					value={firstName}
 					onChange={(e) =>
 						setFirstName((e.target as HTMLInputElement).value ?? '')
 					}
 					onBlur={(e) =>
 						setFirstNameError(
-							validateEmail(
+							validateFirstName(
 								(e.target as HTMLInputElement).value
 							) ?? ''
 						)
 					}
-					error={emailError}
+					error={firstName && firstNameError}
 				/>
 				<Field
-					required
 					id='lastName'
 					label='Last Name'
+					className='bg-slate-200 autofill:!shadow-[inset_0_0_0px_1000px_rgb(226,232,240)]'
 					value={lastName}
 					onChange={(e) =>
 						setLastName((e.target as HTMLInputElement).value ?? '')
 					}
 					onBlur={(e) =>
 						setLastNameError(
-							validateEmail(
+							validateLastName(
 								(e.target as HTMLInputElement).value
 							) ?? ''
 						)
 					}
-					error={emailError}
+					error={lastName && lastNameError}
 				/>
 				<Field
 					required
 					id='email'
 					label='Email Address'
+					className='bg-slate-200 autofill:!shadow-[inset_0_0_0px_1000px_rgb(226,232,240)]'
 					value={email}
 					onChange={(e) =>
 						setEmail((e.target as HTMLInputElement).value ?? '')
@@ -101,16 +145,26 @@ const RegisterComponent = () => {
 							) ?? ''
 						)
 					}
-					error={emailError}
+					error={email && emailError}
 				/>
 				<Field
+					required
 					id='password'
 					label='Password'
 					value={password}
+					className='bg-slate-200 autofill:!shadow-[inset_0_0_0px_1000px_rgb(226,232,240)]'
 					type={showPassword ? 'text' : 'password'}
 					onChange={(e) =>
 						setPassword((e.target as HTMLInputElement).value ?? '')
 					}
+					onBlur={(e) =>
+						setPasswordError(
+							validatePassword(
+								(e.target as HTMLInputElement).value
+							) ?? ''
+						)
+					}
+					error={password && passwordError}
 					endAdornment={
 						<Button
 							variant='text'
@@ -130,7 +184,12 @@ const RegisterComponent = () => {
 					onClick={handleRegister}
 					variant='primary'
 					id='sign in'
-					disabled={!!emailError}
+					disabled={
+						!!emailError ||
+						!!passwordError ||
+						!!firstNameError ||
+						!!lastNameError
+					}
 				>
 					{isFetching && <Spinner />} Sign up
 				</Button>

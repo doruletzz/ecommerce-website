@@ -3,7 +3,7 @@ import React from 'react';
 
 const CartPage = () => {
 	return (
-		<div>
+		<div className='flex justify-center'>
 			<Cart />
 		</div>
 	);

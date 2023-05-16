@@ -9,6 +9,7 @@ import React, {
 type Props<T> = {
 	id: string;
 	type?: string;
+	disabled?: boolean;
 	value: T;
 	className?: string;
 	onChange?: ChangeEventHandler;
@@ -20,6 +21,7 @@ const InputComponent = <T extends string | number>({
 	id,
 	value,
 	type = 'text',
+	disabled = false,
 	className,
 	onChange,
 	onBlur,
@@ -29,6 +31,7 @@ const InputComponent = <T extends string | number>({
 		<input
 			id={id}
 			className={className}
+			disabled={disabled}
 			ref={ref}
 			type={type}
 			defaultValue={value}

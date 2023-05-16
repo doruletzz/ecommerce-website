@@ -1,7 +1,8 @@
 import React, { ChangeEventHandler, ReactNode } from 'react';
-import { Input } from '../';
+import { Alert, Input } from '../';
 
 type Props<T> = {
+	className?: string;
 	id: string;
 	type?: string;
 	label?: string;
@@ -16,6 +17,7 @@ type Props<T> = {
 
 const TextFieldComponent = <T extends string | number>({
 	id,
+	className,
 	type,
 	value,
 	label,
@@ -27,8 +29,12 @@ const TextFieldComponent = <T extends string | number>({
 	onChange,
 }: Props<T>) => {
 	return (
-		<div id='text-field'>
-			<div className='flex items-center border-slate-700 border rounded gap-1 px-2'>
+		<div id='text-field' className='flex flex-col gap-2'>
+			<div
+				className={`flex items-center border-slate-700 border rounded gap-1 px-2 bg-slate-100 ${
+					className ?? ''
+				}`}
+			>
 				{startAdornment}
 				<div className='relative w-full group'>
 					{label && (
@@ -48,14 +54,14 @@ const TextFieldComponent = <T extends string | number>({
 						type={type}
 						onChange={onChange}
 						onBlur={onBlur}
-						className={`outline-none py-2 bg-transparent w-full ${
+						className={`outline-none py-2 bg-slate-100 autofill:bg-slate-100 autofill:shadow-[inset_0_0_0px_1000px_rgb(241,245,249)] w-full ${
 							label ? 'pt-4' : 'pt-2'
-						}`}
+						} ${className ?? ''}`}
 					/>
 				</div>
 				{endAdornment}
 			</div>
-			{error && <p className='text-red-900'>{error}</p>}
+			{error && <Alert>{error}</Alert>}
 		</div>
 	);
 };

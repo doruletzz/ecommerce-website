@@ -22,15 +22,19 @@ import {
 } from '@/constants/paths';
 import { Modal, Ticker } from '..';
 import { SearchBox } from '@/components/product';
-import Submenu from './SubmenuComponent';
+import Submenu from './Submenu/SubmenuComponent';
 import { Category } from '@/types/Category';
 import { client } from '@/lib/sanityClient';
 import { Cart } from '@/components/cart';
-import { useSession } from '@supabase/auth-helpers-react';
+import { User, useSession, useUser } from '@supabase/auth-helpers-react';
 import LogoComponent from './LogoComponent';
+import { useDebounce } from '@/hooks/useDebounce';
 
 const Navbar = () => {
 	const session = useSession();
+	const user = useUser();
+
+	const [showUser, setShowUser] = useState(false);
 
 	const { totalQuantity } = useAppSelector((state) => state.cart);
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -39,11 +43,9 @@ const Navbar = () => {
 	const [showSearchboxModal, setShowSearchboxModal] =
 		useState<boolean>(false);
 	const [showCartModal, setShowCartModal] = useState<boolean>(false);
-	const [submenuCategoryId, setSubmenuCategoryId] = useState<string | null>();
-	const [submenuCategorySlug, setSubmenuCategorySlug] = useState<
-		string | null
-	>();
+	const [submenuCategory, setSubmenuCategory] = useState<Category | null>();
 	const [showSubmenu, setShowSubmenu] = useState<boolean>(false);
+	const debouncedSubmenuCategory = useDebounce(submenuCategory, 2000);
 	const [submenuAnchor, SetSubmenuAnchor] = useState<number | null>();
 	const [scrollTop, setScrollTop] = useState(0);
 
@@ -63,17 +65,6 @@ const Navbar = () => {
 			window.removeEventListener('scroll', handleScroll);
 		};
 	}, []);
-
-	useEffect(() => {
-		if (!showSubmenu) {
-			const timeout = setTimeout(() => {
-				setSubmenuCategoryId(null);
-				setSubmenuCategorySlug(null);
-			}, 500);
-
-			return () => clearTimeout(timeout);
-		}
-	}, [showSubmenu]);
 
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -138,15 +129,15 @@ const Navbar = () => {
 								<Link
 									onMouseEnter={(e) => {
 										setShowSubmenu(true);
-										setSubmenuCategoryId(category._id);
-										setSubmenuCategorySlug(
-											category.slug.current
-										);
+										setSubmenuCategory(category);
+										setShowUser(false);
 										const anchor = getAnchor(e);
 										SetSubmenuAnchor(anchor);
 									}}
 									className={`grid h-full rounded hover:border-slate-700 hover:border px-4 place-items-center ${
-										submenuCategoryId === category._id
+										debouncedSubmenuCategory?._id ===
+											category._id ||
+										submenuCategory?._id === category._id
 											? 'border border-slate-700'
 											: ''
 									}`}
@@ -182,8 +173,18 @@ const Navbar = () => {
 								</Modal>
 							)}
 						</li>
-						<li className='aspect-square h-full'>
+						<li
+							className='aspect-square h-full'
+							onMouseLeave={() => setShowSubmenu(false)}
+						>
 							<Link
+								onMouseEnter={(e) => {
+									setShowSubmenu(!!user);
+									setShowUser(!!user);
+									setSubmenuCategory(null);
+									const anchor = getAnchor(e);
+									SetSubmenuAnchor(anchor);
+								}}
 								className='grid rounded hover:border-slate-700 hover:border w-full h-full place-items-center'
 								href={session?.user ? '/account' : '/login'}
 							>
@@ -195,8 +196,8 @@ const Navbar = () => {
 								id='cart'
 								onClick={() => setShowCartModal(true)}
 								variant='text'
-								className={`aspect aspect-square grid relative rounded hover:border-slate-700 hover:border h-full place-items-center ${
-									!!!totalQuantity
+								className={`aspect aspect-square grid rounded hover:border-slate-700 hover:border h-full place-items-center ${
+									!totalQuantity
 										? 'bg-transparent'
 										: 'bg-orange-600 border-slate-700 border'
 								}`}
@@ -226,12 +227,13 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</nav>
-				{submenuCategoryId && submenuCategorySlug && (
+				{(debouncedSubmenuCategory || submenuAnchor || showUser) && (
 					<Submenu
+						show={showSubmenu}
 						onMouseEnter={() => setShowSubmenu(true)}
 						onMouseLeave={() => setShowSubmenu(false)}
-						categoryId={submenuCategoryId}
-						categorySlug={submenuCategorySlug}
+						category={submenuCategory}
+						user={showUser ? user : null}
 						anchor={submenuAnchor ?? 0}
 					/>
 				)}
