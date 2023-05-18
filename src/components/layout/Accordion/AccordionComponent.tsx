@@ -13,7 +13,7 @@ const AccordionComponent = ({ title, children }: Props) => {
 		<div>
 			<div
 				onClick={() => setIsExpanded((prev) => !prev)}
-				className='flex cursor-pointer justify-between items-center'
+				className='flex cursor-pointer items-center justify-between'
 			>
 				<h4>{title}</h4>
 				<FontAwesomeIcon

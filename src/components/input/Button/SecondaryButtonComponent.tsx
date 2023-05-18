@@ -30,7 +30,7 @@ const SecondaryButtonComponent = ({
 			aria-label={id}
 			style={style}
 			type={type}
-			className={`flex gap-3 justify-center rounded border-slate-700 border place-items-center color-slate-700 ${
+			className={`color-slate-700 flex place-items-center justify-center gap-3 rounded border border-slate-700 ${
 				className ?? ''
 			}`}
 			onClick={onClick}

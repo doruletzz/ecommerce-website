@@ -1,6 +1,7 @@
 import { ProductCard, ProductStore } from '@/components/product';
 import { client } from '@/lib/sanityClient';
 import { Category } from '@/types/Category';
+import { Collection } from '@/types/Collection';
 import { Filter, FilterColor, FilterSize } from '@/types/Filter';
 import { Color, Product, Variant } from '@/types/Product';
 import { GetStaticProps } from 'next';
@@ -10,19 +11,25 @@ import React from 'react';
 type Props = {
 	products: Array<Product>;
 	filter: Filter;
-	title: string;
+	category: Category;
+	collections: Collection[];
 };
 
 const EmptyCollection = () => <div>No products found...</div>;
 
-const Products = ({ products, filter, title }: Props) => {
+const Products = ({ products, filter, category, collections }: Props) => {
 	return (
-		<div className='grid grid-cols-[18rem_1fr] gap-4'>
-			<h4 className='col-start-2 text-2xl font-display font-bold text-slate-700'>
-				{title}
+		<div className='grid gap-4 sm:grid-cols-1 md:grid-cols-[18rem_1fr]'>
+			<h4 className='font-display text-2xl font-bold text-slate-700 sm:col-start-1 md:col-start-2'>
+				{category.name}
 			</h4>
 			{products?.length > 0 ? (
-				<ProductStore filter={filter} products={products} />
+				<ProductStore
+					filter={filter}
+					products={products}
+					collections={collections}
+					category={category}
+				/>
 			) : (
 				<EmptyCollection />
 			)}
@@ -48,8 +55,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		}[]
 	>(allProductsSizesAndColorsQuery);
 
-	const titleQuery = `*[_type == "category" && slug.current == '${category}'][0]{name}`;
-	const { name: title } = await client.fetch<Category>(titleQuery);
+	const titleQuery = `*[_type == "category" && slug.current == '${category}'][0]{name, slug}`;
+	const currentCategory = await client.fetch<Category>(titleQuery);
+
+	const allCollectionsQuery = `*[_type == "collection" && '${category}' in categories[]->slug.current]{name,slug}`;
+	const allCollections = await client.fetch<Collection[]>(
+		allCollectionsQuery
+	);
 
 	let sizes: FilterSize[] = [];
 	let colors: FilterColor[] = [];
@@ -98,8 +110,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	return {
 		props: {
 			products: productsByCategory,
+			collections: allCollections,
 			filter,
-			title,
+			category: currentCategory,
 		},
 	};
 };
@@ -107,8 +120,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths = async () => {
 	const query = `*[_type == "category"]`;
 	const categories = await client.fetch<Category[]>(query);
-
-	console.log(categories);
 
 	return {
 		paths: categories.map((category) => ({

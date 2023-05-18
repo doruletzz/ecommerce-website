@@ -155,7 +155,7 @@ const ProductDetailsPage = ({ productDetails }: Props) => {
 					<div>
 						{variants?.map((variant) => (
 							<div
-								key={variant?.color?._key}
+								key={variant.code}
 								style={{
 									backgroundColor: variant?.color?.value,
 								}}

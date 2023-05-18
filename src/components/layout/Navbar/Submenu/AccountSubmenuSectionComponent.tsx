@@ -9,7 +9,7 @@ type Props = {
 const AccountSubmenuSectionComponent = ({ user }: Props) => {
 	return (
 		<ul className='flex flex-col gap-1'>
-			<li className='whitespace-nowrap font-display font-bold text'>
+			<li className='text whitespace-nowrap font-display font-bold'>
 				My Account
 			</li>
 			<li>

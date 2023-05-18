@@ -31,19 +31,19 @@ const TextFieldComponent = <T extends string | number>({
 	return (
 		<div id='text-field' className='flex flex-col gap-2'>
 			<div
-				className={`flex items-center border-slate-700 border rounded gap-1 px-2 bg-slate-100 ${
+				className={`flex items-center gap-1 rounded border border-slate-700 bg-slate-100 px-2 ${
 					className ?? ''
 				}`}
 			>
 				{startAdornment}
-				<div className='relative w-full group'>
+				<div className='group relative w-full'>
 					{label && (
 						<label
 							className={`absolute ${
-								value ? 'top-0.5 text-xs' : 'top-3 text-md'
+								value ? 'top-0.5 text-xs' : 'text-md top-3'
 							} ${
 								error ? 'text-red-900' : 'text-slate-900'
-							} h-4 group-focus-within:top-0.5 group-focus-within:text-xs text-md pointer-events-none transition-all duration-500 ease-in-out-expo`}
+							} text-md pointer-events-none h-4 transition-all duration-500 ease-in-out-expo group-focus-within:top-0.5 group-focus-within:text-xs`}
 						>
 							{`${label}${required ? '*' : ''}`}
 						</label>
@@ -54,7 +54,7 @@ const TextFieldComponent = <T extends string | number>({
 						type={type}
 						onChange={onChange}
 						onBlur={onBlur}
-						className={`outline-none py-2 bg-slate-100 autofill:bg-slate-100 autofill:shadow-[inset_0_0_0px_1000px_rgb(241,245,249)] w-full ${
+						className={`w-full bg-slate-100 py-2 outline-none autofill:bg-slate-100 autofill:shadow-[inset_0_0_0px_1000px_rgb(241,245,249)] ${
 							label ? 'pt-4' : 'pt-2'
 						} ${className ?? ''}`}
 					/>

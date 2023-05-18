@@ -1,24 +1,36 @@
 import { Color, Product } from '@/types/Product';
 import React, { useEffect, useState } from 'react';
-import SideBarComponent from './SideBarComponent';
+import FilterComponent from './FilterComponent';
 import { ProductCard } from '..';
 import { Filter, Sort } from '@/types/Filter';
+import { Collection } from '@/types/Collection';
+import { Category } from '@/types/Category';
+import { Button } from '@/components/input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faSliders } from '@fortawesome/free-solid-svg-icons';
+import useWindowDimensions from '@/hooks/useWindowDimensions';
+import { Modal } from '@/components/layout';
 
 type Props = {
 	products: Product[];
+	collections: Collection[];
 	filter: Filter;
+	category: Category;
 };
 
-const ProductStoreComponent = ({ filter, products }: Props) => {
+const ProductStoreComponent = ({
+	filter,
+	products,
+	collections,
+	category,
+}: Props) => {
+	const [width] = useWindowDimensions();
 	const [selectedFilter, setSelectedFilter] = useState<Filter>();
+	const [showFilter, setShowFilter] = useState(false);
 
 	useEffect(() => {
 		setSelectedFilter({});
 	}, [filter]);
-
-	useEffect(() => {
-		console.log(selectedFilter);
-	}, [selectedFilter]);
 
 	const filterByBrand = (products: Product[]): Product[] =>
 		selectedFilter && selectedFilter.brands?.length
@@ -69,14 +81,9 @@ const ProductStoreComponent = ({ filter, products }: Props) => {
 
 	return (
 		<>
-			<SideBarComponent
-				filter={filter}
-				selected={selectedFilter}
-				setSelected={setSelectedFilter}
-			/>
 			<div
 				id='products'
-				className='grid grid-cols-5 gap-4 flex-1 transition-all duration-700'
+				className='grid flex-1 grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'
 			>
 				{filterProducts(products)
 					.sort(
@@ -90,6 +97,42 @@ const ProductStoreComponent = ({ filter, products }: Props) => {
 						<ProductCard key={product._id} product={product} />
 					))}
 			</div>
+			{width <= 640 ? (
+				showFilter && (
+					<Modal onBackdropClick={() => setShowFilter(false)}>
+						<h4 className='mb-4 font-display text-xl font-bold text-slate-600'>
+							{category.name}
+						</h4>
+						<FilterComponent
+							category={category}
+							collections={collections}
+							filter={filter}
+							selected={selectedFilter}
+							setSelected={setSelectedFilter}
+						/>
+					</Modal>
+				)
+			) : (
+				<FilterComponent
+					category={category}
+					collections={collections}
+					filter={filter}
+					selected={selectedFilter}
+					setSelected={setSelectedFilter}
+				/>
+			)}
+			{width <= 640 && !showFilter && (
+				<div className='fixed bottom-8 left-1/2 -translate-x-1/2'>
+					<Button
+						id='fab'
+						className='animate-slide-up-and-fade-in px-4 py-2'
+						onClick={() => setShowFilter(true)}
+					>
+						<FontAwesomeIcon icon={faSliders} />
+						Filter
+					</Button>
+				</div>
+			)}
 		</>
 	);
 };

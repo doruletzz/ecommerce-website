@@ -1,7 +1,10 @@
 import { Button, Field } from '@/components/input';
-import { Br } from '@/components/layout';
+import { Br, Modal } from '@/components/layout';
 import AccordionComponent from '@/components/layout/Accordion/AccordionComponent';
+import { Category } from '@/types/Category';
+import { Collection } from '@/types/Collection';
 import { Filter, FilterColor, FilterSize, Sort } from '@/types/Filter';
+import Link from 'next/link';
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 type Flatten<T> = T extends any[] ? T[number] : T;
@@ -10,9 +13,17 @@ type Props = {
 	filter: Filter;
 	selected?: Filter;
 	setSelected: Dispatch<SetStateAction<Filter | undefined>>;
+	collections: Collection[];
+	category: Category;
 };
 
-const SideBarComponent = ({ filter, selected, setSelected }: Props) => {
+const FilterComponent = ({
+	filter,
+	selected,
+	setSelected,
+	collections,
+	category,
+}: Props) => {
 	const changeSelected = (
 		selected: Filter,
 		value: Flatten<Filter[keyof Filter]>,
@@ -24,10 +35,9 @@ const SideBarComponent = ({ filter, selected, setSelected }: Props) => {
 	) => {
 		let newSelected = { ...selected };
 		const selectedIndex =
-			selected[field]?.findIndex((f: Flatten<Filter[keyof Filter]>) => {
-				console.log(f, value, equalFn(f, value));
-				return equalFn(f, value);
-			}) ?? -1;
+			selected[field]?.findIndex((f: Flatten<Filter[keyof Filter]>) =>
+				equalFn(f, value)
+			) ?? -1;
 
 		if (selectedIndex === -1)
 			newSelected = {
@@ -48,6 +58,19 @@ const SideBarComponent = ({ filter, selected, setSelected }: Props) => {
 
 	return (
 		<div className='row-span-2 row-start-1'>
+			{collections.length && (
+				<ul>
+					{collections?.map((collection) => (
+						<li>
+							<Link
+								href={`${category.slug.current}/${collection.slug.current}`}
+							>
+								{collection.name}
+							</Link>
+						</li>
+					))}
+				</ul>
+			)}
 			<AccordionComponent title='Colors'>
 				<ul>
 					{filter.colors?.map((color) => (
@@ -172,4 +195,4 @@ const SideBarComponent = ({ filter, selected, setSelected }: Props) => {
 	);
 };
 
-export default SideBarComponent;
+export default FilterComponent;

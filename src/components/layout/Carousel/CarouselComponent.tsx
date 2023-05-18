@@ -49,10 +49,10 @@ const CarouselComponent = <T extends ReactNode>({
 	return (
 		<div
 			id='carousel'
-			className='grid grid-cols-[16px_minmax(0,_4fr)_16px] gap-4 items-center justify-between'
+			className='grid grid-cols-[16px_minmax(0,_4fr)_16px] items-center justify-between gap-4'
 		>
 			{title && (
-				<h2 className='text-4xl tracking-tighter text-slate-700 font-bold col-span-2 font-display'>
+				<h2 className='col-span-2 font-display text-4xl font-bold tracking-tighter text-slate-700'>
 					{title}
 				</h2>
 			)}
@@ -69,16 +69,16 @@ const CarouselComponent = <T extends ReactNode>({
 			<div
 				ref={sliderRef}
 				id='slider'
-				className={`flex w-full gap-12 scroll-smooth overflow-y-hidden overflow-x-auto transition-all snap-x relative ${
+				className={`relative flex w-full snap-x gap-12 overflow-x-auto overflow-y-hidden scroll-smooth transition-all ${
 					title ? 'col-span-4' : 'col-span-2'
 				}`}
 			>
 				{items?.map((item: T, index: number) => (
 					<li
 						key={index}
-						className={`snap-start flex-grow-0 flex-shrink-0 ${basisVariants[
+						className={`flex-shrink-0 flex-grow-0 snap-start ${basisVariants[
 							pageSize ?? '1'
-						].toString()} flex-nowrap list-none`}
+						].toString()} list-none flex-nowrap`}
 					>
 						{item}
 					</li>
@@ -88,7 +88,7 @@ const CarouselComponent = <T extends ReactNode>({
 			<Button
 				variant='text'
 				id='slide-right'
-				className='row-start-1 col-start-4 w-full hover:scale-105'
+				className='col-start-4 row-start-1 w-full hover:scale-105'
 				onClick={() => slideRight()}
 			>
 				<FontAwesomeIcon icon={faArrowRight} />

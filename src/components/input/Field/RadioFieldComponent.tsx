@@ -35,7 +35,7 @@ const RadioFieldComponent = <T extends string | number>(props: Props<T>) => {
 	return (
 		<div id='checkbox-field' className='h-fit'>
 			{startAdornment}
-			<div className='w-full group flex flex-row-reverse items-center justify-end gap-2'>
+			<div className='group flex w-full flex-row-reverse items-center justify-end gap-2'>
 				{label && (
 					<label className={''} htmlFor={id}>
 						{`${label}${required ? '*' : ''}`}
@@ -49,7 +49,7 @@ const RadioFieldComponent = <T extends string | number>(props: Props<T>) => {
 					onChange={onChange}
 					onBlur={onBlur}
 					disabled={disabled}
-					className={`outline-none bg-transparent`}
+					className={`bg-transparent outline-none`}
 				/>
 			</div>
 			{endAdornment}

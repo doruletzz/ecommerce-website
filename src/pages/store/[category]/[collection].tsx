@@ -37,8 +37,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		products: Product[];
 	}>(productsByCollectionQuery);
 
-	console.log(productsByCategory);
-
 	return {
 		props: {
 			products: productsByCategory,

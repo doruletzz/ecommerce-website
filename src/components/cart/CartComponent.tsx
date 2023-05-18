@@ -17,15 +17,15 @@ const Cart = ({ isModal = false, onClose }: Props) => {
 	if (totalQuantity === 0) return <EmptyCartComponent />;
 
 	return (
-		<div className='h-full flex flex-col overflow-hidden gap-4 items-baseline w-256 p-4'>
-			<h6 className='text-sm text-slate-600 font-bold font-display'>
+		<div className='min-w-256 flex h-full flex-col items-baseline gap-4 overflow-hidden p-4'>
+			<h6 className='font-display text-sm font-bold text-slate-600'>
 				Your Cart
 			</h6>
-			<div className='w-full h-[1px] bg-slate-700' />
+			<div className='h-[1px] w-full bg-slate-700' />
 
 			<div
 				id='products'
-				className={`overflow-auto flex-0 max-h-128 w-full flex flex-col gap-2`}
+				className={`flex-0 flex max-h-128 w-full flex-col gap-2 overflow-auto`}
 			>
 				{items?.map((item, index) => (
 					<CartItem
@@ -41,7 +41,7 @@ const Cart = ({ isModal = false, onClose }: Props) => {
 			<div id='total'>$359.99</div>
 			<Br />
 			<Link id='checkout' href='/checkout' className='w-full'>
-				<Button id='checkout' className='w-full h-8' onClick={onClose}>
+				<Button id='checkout' className='h-8 w-full' onClick={onClose}>
 					Proceed to checkout{' '}
 					{totalQuantity ? `(${totalQuantity})` : ''}
 				</Button>
@@ -52,7 +52,7 @@ const Cart = ({ isModal = false, onClose }: Props) => {
 					<Button
 						id='checkout'
 						variant='secondary'
-						className='w-full h-8'
+						className='h-8 w-full'
 						onClick={onClose}
 					>
 						View Cart

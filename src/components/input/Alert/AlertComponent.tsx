@@ -22,7 +22,7 @@ const AlertComponent = ({
 
 	return (
 		<div
-			className={`flex gap-2 py-1 px-3 items-center rounded border text-sm ${variants[severity]}`}
+			className={`flex items-center gap-2 rounded border px-3 py-1 text-sm ${variants[severity]}`}
 		>
 			{icon && icon === true ? (
 				<AlertIconComponent severity={severity} />

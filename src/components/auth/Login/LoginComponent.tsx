@@ -80,9 +80,9 @@ const LoginComponent = () => {
 	};
 
 	return (
-		<div className='max-w-xl mx-auto flex flex-col gap-2 mt-16'>
-			<form className=' bg-slate-200 rounded p-12 flex flex-col gap-2 border border-slate-700'>
-				<h3 className='text-4xl font-display font-bold'>Sign In</h3>
+		<div className='mx-auto mt-16 flex max-w-xl flex-col gap-2'>
+			<form className=' flex flex-col gap-2 rounded border border-slate-700 bg-slate-200 p-12'>
+				<h3 className='font-display text-4xl font-bold'>Sign In</h3>
 				<br />
 				{error && (
 					<div className='mb-2'>
@@ -139,7 +139,7 @@ const LoginComponent = () => {
 					}
 					error={password && passwordError}
 				/>
-				<div className='flex justify-between items-center'>
+				<div className='flex items-center justify-between'>
 					<Field
 						id='remember me'
 						label='Remember me'
@@ -166,10 +166,10 @@ const LoginComponent = () => {
 				>
 					{isFetching && <Spinner />} Sign in
 				</Button>
-				<div className='w-full flex items-center gap-4'>
-					<div className='w-full bg-slate-700 h-[1px] rounded' />
+				<div className='flex w-full items-center gap-4'>
+					<div className='h-[1px] w-full rounded bg-slate-700' />
 					<p className='w-4'>or</p>
-					<div className='w-full bg-slate-700 h-[1px] rounded' />
+					<div className='h-[1px] w-full rounded bg-slate-700' />
 				</div>
 				<Button
 					className='p-2'

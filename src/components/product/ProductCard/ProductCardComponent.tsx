@@ -70,34 +70,34 @@ const ProductCardComponent = ({ product }: Props) => {
 	}, [product, product.variants]);
 
 	return (
-		<div className='flex group flex-col gap-9 relative aspect-card animate-slide-up-and-fade-in active:scale-[99%] duration-100 ease-in-out-expo '>
+		<div className='group relative flex aspect-card animate-slide-up-and-fade-in flex-col gap-9 duration-100 ease-in-out-expo active:scale-[99%] '>
 			<div
-				className={`pb-16 group-hover:pb-0 h-full  transition-all duration-[1300ms] ease-in-out-expo ${
+				className={`h-full pb-16 transition-all  duration-[1300ms] ease-in-out-expo group-hover:pb-0 ${
 					isQuickBuyHovered ? 'group-hover:pb-16' : ''
 				}`}
 			>
 				<ProductImageSlider product={product} />
 			</div>
 			<div
-				className={`h-16 pt-1 gap-2 w-full flex absolute bottom-0 justify-between ${
+				className={`absolute bottom-0 flex h-16 w-full justify-between gap-2 pt-1 ${
 					isQuickBuyHovered
 						? 'group-hover:flex'
 						: 'group-hover:hidden'
 				} animate-slide-up-and-fade-in text-left`}
 			>
 				<div className='shrink'>
-					<h6 className='text-lg leading-tight tracking-tight font-bold'>
+					<h6 className='text-lg font-bold leading-tight tracking-tight'>
 						{product.name}
 					</h6>
 					<p className='text-sm'>{product.category?.name}</p>
 				</div>
 				<div>
-					<h5 className='text-2xl font-extrabold whitespace-nowrap text-orange-900 font-display'>
+					<h5 className='whitespace-nowrap font-display text-2xl font-extrabold text-orange-900'>
 						${product.price}
 					</h5>
 
 					{product.discount && (
-						<p className='line-through text-right'>
+						<p className='text-right line-through'>
 							$
 							{(
 								(product.price / (100 - product.discount)) *
@@ -108,14 +108,14 @@ const ProductCardComponent = ({ product }: Props) => {
 				</div>
 			</div>
 			<div
-				className={`hidden pointer-events-none group-hover:flex group-hover:absolute top-4 bottom-4 flex-col justify-between ${
+				className={`pointer-events-none bottom-4 top-4 hidden flex-col justify-between group-hover:absolute group-hover:flex ${
 					isQuickBuyHovered ? 'pb-16' : ''
 				} left-4 animate-slide-up-and-fade-in transition-all duration-1000 ease-in-out-expo`}
 			>
 				{sizes && (
 					<div
 						id='sizes'
-						className='flex flex-col gap-4 place-items-start'
+						className='flex flex-col place-items-start gap-4'
 					>
 						{sizes?.map((size, index) => (
 							<Button
@@ -123,9 +123,9 @@ const ProductCardComponent = ({ product }: Props) => {
 								variant='secondary'
 								key={index}
 								onClick={() => setSelectedSize(size)}
-								className={`font-display bg-slate-200 pointer-events-auto hover:scale-105 ${
+								className={`pointer-events-auto bg-slate-200 font-display hover:scale-105 ${
 									size === selectedSize
-										? 'p-1 bg-slate-50'
+										? 'bg-slate-50 p-1'
 										: 'p-1'
 								}`}
 							>
@@ -135,7 +135,7 @@ const ProductCardComponent = ({ product }: Props) => {
 					</div>
 				)}
 				{colors && (
-					<div id='colors' className='flex gap-4 items-center'>
+					<div id='colors' className='flex items-center gap-4'>
 						{colors?.map((color, index) => (
 							<Button
 								variant='secondary'
@@ -143,9 +143,9 @@ const ProductCardComponent = ({ product }: Props) => {
 								onClick={() => setSelectedColor(color)}
 								key={index}
 								style={{ backgroundColor: color.value }}
-								className={`aspect-square w-4 relative pointer-events-auto hover:scale-105  ${
+								className={`pointer-events-auto relative aspect-square w-4 hover:scale-105  ${
 									color.name === selectedColor?.name
-										? 'border border-slate-700 rounded-full'
+										? 'rounded-full border border-slate-700'
 										: ''
 								}`}
 							/>
@@ -166,13 +166,13 @@ const ProductCardComponent = ({ product }: Props) => {
 				id='quickbuy'
 				className={`${
 					product.discount ? 'block' : 'hidden'
-				} group-hover:flex absolute top-4 right-1/2 py-2 px-4 text-sm hover:scale-105 bg-orange-600 hover:bg-orange-500 rounded group-hover:px-2 group-hover:right-4 group-hover:translate-x-0 transition-[right_transform_width] duration-[1300ms] ease-in-out-expo translate-x-1/2`}
+				} absolute right-1/2 top-4 translate-x-1/2 rounded bg-orange-600 px-4 py-2 text-sm transition-[right_transform_width] duration-[1300ms] ease-in-out-expo hover:scale-105 hover:bg-orange-500 group-hover:right-4 group-hover:flex group-hover:translate-x-0 group-hover:px-2`}
 			>
 				{product.discount && (
 					<p
 						className={` animate-slide-up-and-fade-in ${
 							isQuickBuyHovered
-								? 'group-hover:block pl-2'
+								? 'pl-2 group-hover:block'
 								: 'group-hover:hidden'
 						} block `}
 					>
@@ -181,7 +181,7 @@ const ProductCardComponent = ({ product }: Props) => {
 				)}
 				<div
 					id='cart'
-					className='group-hover:block w-7 hidden animate-slide-up-and-fade-in'
+					className='hidden w-7 animate-slide-up-and-fade-in group-hover:block'
 				>
 					<FontAwesomeIcon icon={faCartShopping} />
 				</div>

@@ -23,7 +23,7 @@ const TextButtonComponent = ({
 			aria-label={id}
 			style={style}
 			type={type}
-			className={`flex gap-3 rounded h-8 place-items-center ${
+			className={`flex h-8 place-items-center gap-3 rounded ${
 				className ?? ''
 			}`}
 			onClick={onClick}

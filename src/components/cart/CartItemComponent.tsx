@@ -31,9 +31,9 @@ const CartItemComponent = ({
 					href={'/product/' + product.slug.current}
 					onClick={onProductClick}
 				>
-					<h4 className='font-bold text-lg'>{product.name}</h4>
+					<h4 className='text-lg font-bold'>{product.name}</h4>
 				</Link>
-				<div className='text-slate-700 text-sm'>
+				<div className='text-sm text-slate-700'>
 					{variant && variant.color && (
 						<p className=''>{`Color: ${variant.color.name}`}</p>
 					)}
@@ -41,7 +41,7 @@ const CartItemComponent = ({
 						<p>{`Size: ${variant.size}`}</p>
 					)}
 				</div>
-				<p className='text-md font-display text-orange-700 font-bold'>
+				<p className='text-md font-display font-bold text-orange-700'>
 					${((variant?.price ?? product.price) * quantity).toFixed(2)}
 				</p>
 			</div>
@@ -53,7 +53,7 @@ const CartItemComponent = ({
 					<FontAwesomeIcon icon={faPencil} />
 				</Button>
 			</div>
-			<div className='flex items-center gap-1 ml-auto text-slate-900'>
+			<div className='ml-auto flex items-center gap-1 text-slate-900'>
 				<p>Quantity:</p>
 				<Button variant='text' id='minus' className='text-slate-700'>
 					<FontAwesomeIcon icon={faMinus} />

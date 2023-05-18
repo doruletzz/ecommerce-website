@@ -31,14 +31,14 @@ const SubmenuComponent = ({
 			style={{
 				left: anchor,
 			}}
-			className='absolute -translate-x-1/2 top-full transition-[left/height] duration-700 ease-in-out-expo'
+			className='absolute top-full -translate-x-1/2 transition-[left/height] duration-700 ease-in-out-expo'
 		>
 			<div
 				className={`${
 					show
 						? 'animate-slide-up-and-fade-in'
 						: 'animate-slide-down-and-fade-out'
-				} mt-1 p-4 bg-slate-100 border border-slate-700 rounded`}
+				} mt-1 rounded border border-slate-700 bg-slate-100 p-4`}
 			>
 				{category && (
 					<CategorySubmenuSectionComponent category={category} />

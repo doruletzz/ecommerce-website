@@ -23,7 +23,7 @@ const BadgeComponent = ({
 					vertical === 'top' ? '-top-2.5' : 'top-2.5'
 				} ${
 					horizontal === 'right' ? '-right-2.5' : 'right-2.5'
-				} bg-slate-400 text-xs border border-slate-700 rounded-full min-w-[16px] h-4 font-display text-center text-slate-900 pointer-events-none animate-slide-up-and-fade-in leading-3 px-1`}
+				} pointer-events-none h-4 min-w-[16px] animate-slide-up-and-fade-in rounded-full border border-slate-700 bg-slate-400 px-1 text-center font-display text-xs leading-3 text-slate-900`}
 			>
 				{badgeContent}
 			</div>

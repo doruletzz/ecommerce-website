@@ -27,17 +27,17 @@ const HeroBanner = ({ banner, product }: Props) => {
 			<Image
 				width={imgProps.width}
 				height={imgProps.height}
-				className='absolute inset-0 z-0 opacity-70 pointer-events-none'
+				className='pointer-events-none absolute inset-0 z-0 opacity-70'
 				src={imgProps.src}
 				loader={imgProps.loader}
 				alt='keyboard'
 			/>
 			{banner && (
-				<div className='flex flex-col text-center pt-32 gap-4 max-w-7xl mx-auto min-h-screen relative'>
-					<h3 className='text-orange-600 text-sm mx-auto '>
+				<div className='relative mx-auto flex min-h-screen max-w-7xl flex-col gap-4 pt-32 text-center'>
+					<h3 className='mx-auto text-sm text-orange-600 '>
 						{banner.midText}
 					</h3>
-					<h1 className='text-slate-900 text-6xl font-extrabold font-display mb-4 '>
+					<h1 className='mb-4 font-display text-6xl font-extrabold text-slate-900 '>
 						{banner.largeText}
 					</h1>
 					<Link
@@ -48,14 +48,14 @@ const HeroBanner = ({ banner, product }: Props) => {
 							id='cta-button'
 							type='button'
 							variant='primary'
-							className='py-2 px-4 uppercase'
+							className='px-4 py-2 uppercase'
 						>
 							{banner.primaryButtonText}{' '}
 							<FontAwesomeIcon icon={faArrowRight} />
 						</Button>
 					</Link>
 					{product && (
-						<div className='w-128 mx-auto mt-32 delay-700'>
+						<div className='mx-auto mt-32 w-128 delay-700'>
 							<h4 className='text-left'>BUY NOW:</h4>
 							<ProductCard product={product} />
 						</div>

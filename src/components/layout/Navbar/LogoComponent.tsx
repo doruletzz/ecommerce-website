@@ -10,7 +10,7 @@ const LogoComponent = ({ isSmall, delay = 0 }: Props) => {
 		<img
 			style={{ animationDelay: `${delay}ms` }}
 			src='/keycaps-logo.svg'
-			className={`transition-all ease-in-out-expo duration-700 ${
+			className={`transition-all duration-700 ease-in-out-expo ${
 				isSmall ? 'h-4' : 'h-6'
 			} animate-slide-right-and-fade-in opacity-0 `}
 		/>

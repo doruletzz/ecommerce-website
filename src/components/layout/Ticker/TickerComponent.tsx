@@ -48,7 +48,7 @@ const TickerComponent = ({ children, onClose }: Props) => {
 		<div className='flex'>
 			<div
 				ref={containerRef}
-				className='animate-inifinte-scroll flex font-display tracking-tighter flex-1'
+				className='flex flex-1 animate-inifinte-scroll font-display tracking-tighter'
 			>
 				<div className='whitespace-nowrap p-1' ref={elementRef}>
 					{children}

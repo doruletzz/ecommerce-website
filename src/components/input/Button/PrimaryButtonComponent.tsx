@@ -26,7 +26,7 @@ const PrimaryButtonComponent = ({
 			aria-label={id}
 			style={style}
 			type={type}
-			className={`rounded text-center justify-center bg-slate-700 flex items-center gap-3 text-zinc-100 font-bold hover:bg-slate-800 hover:gap-6 transition-all duration-400 ease-in-out-expo ${
+			className={`duration-400 flex items-center justify-center gap-3 rounded bg-slate-700 text-center font-bold text-zinc-100 transition-all ease-in-out-expo hover:gap-4 hover:bg-slate-800 active:scale-[102%] ${
 				className ?? ''
 			}`}
 			onClick={onClick}

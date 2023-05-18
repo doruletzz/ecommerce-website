@@ -1,5 +1,7 @@
 import { useAppSelector } from '@/features/app/hooks';
 import {
+	faBars,
+	faHamburger,
 	faPerson,
 	faSearch,
 	faShoppingCart,
@@ -29,6 +31,7 @@ import { Cart } from '@/components/cart';
 import { User, useSession, useUser } from '@supabase/auth-helpers-react';
 import LogoComponent from './LogoComponent';
 import { useDebounce } from '@/hooks/useDebounce';
+import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 const Navbar = () => {
 	const session = useSession();
@@ -50,6 +53,7 @@ const Navbar = () => {
 	const [scrollTop, setScrollTop] = useState(0);
 
 	const [isSmall, setIsSmall] = useState(false);
+	const [width] = useWindowDimensions();
 
 	useEffect(() => {
 		const handleScroll = (event: Event) => {
@@ -86,26 +90,29 @@ const Navbar = () => {
 
 	return (
 		<>
-			<div className='sticky top-0 bg-orange-400 text-slate-900 overflow-hidden border-b border-slate-900'>
+			<div className='sticky top-0 overflow-hidden border-b border-slate-900 bg-orange-400 text-slate-900'>
 				<Ticker onClose={() => alert('closed')}>
 					{'30% OFF WITH CODE:"KEYZ"'}
 				</Ticker>
 			</div>
 			<div
 				className={`relative ${
-					isSmall ? 'h-12 mb-4  border border-b-slate-700' : 'h-16'
-				} bg-slate-100 flex items-center rounded-b transition-all duration-700 ease-in-out-expo`}
+					isSmall ? 'mb-4 h-12  border border-b-slate-700' : 'h-16'
+				} flex items-center rounded-b bg-slate-100 transition-all duration-700 ease-in-out-expo`}
 			>
 				<nav
-					className={`flex w-full h-8 items-center px-9 justify-between py-1`}
+					className={`flex h-8 w-full items-center justify-between px-9 py-1`}
 				>
-					<div className='flex-1 font-display'>
+					<Button className='block flex-1 md:hidden' variant='text'>
+						<FontAwesomeIcon icon={faBars} />
+					</Button>
+					<div className='flex flex-1 justify-center font-display transition-[flex-grow] duration-1000 md:justify-start'>
 						<Link
 							href='/'
-							className='flex gap-2 items-center text-xl font-extrabold text-slate-900'
+							className='flex items-center gap-2 text-xl font-extrabold text-slate-900'
 						>
 							<LogoComponent isSmall={isSmall} />
-							{isSmall ? (
+							{isSmall || width < 768 ? (
 								<>
 									<LogoComponent isSmall={isSmall} />
 									<LogoComponent
@@ -121,7 +128,7 @@ const Navbar = () => {
 						</Link>
 					</div>
 					<ul
-						className='flex justify-center gap-6 flex-1 h-full'
+						className='hidden h-full flex-1 justify-center gap-6 md:flex'
 						onMouseLeave={() => setShowSubmenu(false)}
 					>
 						{categories.map((category) => (
@@ -134,7 +141,7 @@ const Navbar = () => {
 										const anchor = getAnchor(e);
 										SetSubmenuAnchor(anchor);
 									}}
-									className={`grid h-full rounded hover:border-slate-700 hover:border px-4 place-items-center ${
+									className={`grid h-full place-items-center rounded px-4 hover:border hover:border-slate-700 ${
 										debouncedSubmenuCategory?._id ===
 											category._id ||
 										submenuCategory?._id === category._id
@@ -150,18 +157,20 @@ const Navbar = () => {
 							</li>
 						))}
 					</ul>
-					<ul className='flex gap-4 justify-end flex-1 h-full'>
+					<ul className='flex h-full flex-1 justify-end gap-4'>
 						<li className='h-full'>
 							<Button
 								variant='text'
 								id='search'
-								className='flex gap-3 rounded hover:border-slate-700 hover:border px-3 h-full place-items-center'
+								className='flex h-full place-items-center gap-3 rounded px-1 transition-all duration-700 ease-in-out-expo hover:border hover:border-slate-700 md:px-3'
 								onClick={() =>
 									setShowSearchboxModal((prev) => !prev)
 								}
 							>
 								<FontAwesomeIcon icon={faSearch} />
-								<p>Search</p>
+								<p className='hidden animate-slide-up-and-fade-in md:block'>
+									Search
+								</p>
 							</Button>
 							{showSearchboxModal && (
 								<Modal
@@ -185,7 +194,7 @@ const Navbar = () => {
 									const anchor = getAnchor(e);
 									SetSubmenuAnchor(anchor);
 								}}
-								className='grid rounded hover:border-slate-700 hover:border w-full h-full place-items-center'
+								className='grid h-full w-full place-items-center rounded hover:border hover:border-slate-700'
 								href={session?.user ? '/account' : '/login'}
 							>
 								<FontAwesomeIcon icon={faUser} />
@@ -196,10 +205,10 @@ const Navbar = () => {
 								id='cart'
 								onClick={() => setShowCartModal(true)}
 								variant='text'
-								className={`aspect aspect-square grid rounded hover:border-slate-700 hover:border h-full place-items-center ${
+								className={`aspect grid aspect-square h-full place-items-center rounded hover:border hover:border-slate-700 ${
 									!totalQuantity
 										? 'bg-transparent'
-										: 'bg-orange-600 border-slate-700 border'
+										: 'border border-slate-700 bg-orange-600'
 								}`}
 							>
 								{totalQuantity > 0 ? (
